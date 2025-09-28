@@ -11,24 +11,45 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            min-height: 100vh;
-            background-image: 
-                linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="100" fill="black" opacity="0.03">🤘</text></svg>');
+        :root {
+            --primary-red: #dc2626;
+            --dark-red: #991b1b;
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(55, 65, 81, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --border-color: rgba(75, 85, 99, 0.3);
         }
 
-        /* Login Page Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Scrollbar personnalisée */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 5px;
+        }
+
+        /* Login Page */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
         }
 
         .login-box {
@@ -39,6 +60,7 @@
             max-width: 450px;
             box-shadow: 0 20px 60px rgba(220, 38, 38, 0.3);
             border: 1px solid rgba(220, 38, 38, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .login-logo {
@@ -46,30 +68,30 @@
             margin-bottom: 30px;
         }
 
-        .login-logo .logo-icon {
+        .logo-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #dc2626, #991b1b);
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 40px;
             margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.8); }
         }
 
         .login-logo h1 {
-            color: #dc2626;
+            color: var(--primary-red);
             font-size: 32px;
             letter-spacing: 3px;
             margin-bottom: 5px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .login-logo p {
-            color: #9ca3af;
-            font-size: 14px;
         }
 
         .form-group {
@@ -79,92 +101,67 @@
         .form-label {
             display: block;
             margin-bottom: 8px;
-            color: #d1d5db;
+            color: var(--text-secondary);
             font-size: 14px;
             font-weight: 500;
         }
 
-        .form-input {
+        .form-input, .form-select, .form-textarea {
             width: 100%;
             padding: 12px 15px;
             background: rgba(55, 65, 81, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.5);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #ffffff;
+            color: var(--text-primary);
             font-size: 15px;
             transition: all 0.3s;
         }
 
-        .form-input:focus {
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: #dc2626;
-            background: rgba(55, 65, 81, 0.8);
+            border-color: var(--primary-red);
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            border: none;
+        .btn {
+            padding: 12px 24px;
             border-radius: 8px;
-            color: white;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
+            border: none;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 10px;
         }
 
-        .btn-login:hover {
-            background: linear-gradient(135deg, #b91c1c, #991b1b);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+        }
+
+        .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
         }
 
-        .login-divider {
-            text-align: center;
-            margin: 25px 0;
-            color: #6b7280;
-            position: relative;
-        }
-
-        .login-divider::before,
-        .login-divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: #374151;
-        }
-
-        .login-divider::before { left: 0; }
-        .login-divider::after { right: 0; }
-
-        .btn-register {
-            width: 100%;
-            padding: 14px;
+        .btn-secondary {
             background: transparent;
-            border: 2px solid #dc2626;
-            border-radius: 8px;
-            color: #dc2626;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 2px solid var(--primary-red);
+            color: var(--primary-red);
         }
 
-        .btn-register:hover {
+        .btn-secondary:hover {
             background: rgba(220, 38, 38, 0.1);
-            transform: translateY(-2px);
         }
 
-        /* Main App Styles */
+        /* Main App */
         .app-container {
             display: none;
             min-height: 100vh;
@@ -174,13 +171,13 @@
             display: block;
         }
 
-        /* Header with Navigation */
+        /* Header */
         header {
             background: rgba(0, 0, 0, 0.95);
-            border-bottom: 3px solid #dc2626;
+            border-bottom: 3px solid var(--primary-red);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             backdrop-filter: blur(10px);
         }
 
@@ -198,26 +195,15 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
-        }
-
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #dc2626, #991b1b);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
+            text-decoration: none;
         }
 
         .logo h1 {
-            color: #dc2626;
+            color: var(--primary-red);
             font-size: 24px;
             letter-spacing: 2px;
         }
 
-        /* Navigation */
         .nav-menu {
             display: flex;
             gap: 30px;
@@ -225,7 +211,7 @@
         }
 
         .nav-item {
-            color: #d1d5db;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
@@ -235,24 +221,13 @@
         }
 
         .nav-item:hover {
-            color: #dc2626;
+            color: var(--primary-red);
         }
 
         .nav-item.active {
-            color: #dc2626;
+            color: var(--primary-red);
         }
 
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -18px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #dc2626;
-        }
-
-        /* User Menu */
         .user-menu {
             display: flex;
             align-items: center;
@@ -263,21 +238,16 @@
             position: relative;
             background: transparent;
             border: none;
-            color: #d1d5db;
+            color: var(--text-secondary);
             font-size: 20px;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .notification-btn:hover {
-            color: #dc2626;
         }
 
         .notification-badge {
             position: absolute;
             top: -5px;
             right: -5px;
-            background: #dc2626;
+            background: var(--primary-red);
             color: white;
             border-radius: 50%;
             width: 18px;
@@ -289,86 +259,102 @@
             font-weight: bold;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 15px;
-            background: rgba(55, 65, 81, 0.3);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .user-profile:hover {
-            background: rgba(55, 65, 81, 0.5);
-        }
-
         .user-avatar {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #dc2626, #991b1b);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        .user-name {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Main Content Area */
+        /* Main Content */
         .main-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 30px 20px;
         }
 
-        /* Page Sections */
         .page-section {
             display: none;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .page-section.active {
             display: block;
         }
 
-        /* Events Page */
-        .filters {
-            background: rgba(55, 65, 81, 0.3);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Page Headers */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.15);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        /* Grids */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Events Specific */
+        .event-filters {
+            background: var(--bg-card);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
         }
 
-        .search-box {
-            width: 100%;
-            padding: 14px 20px;
-            background: rgba(31, 41, 55, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 15px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: #dc2626;
-            background: rgba(31, 41, 55, 0.8);
-        }
-
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
+            margin-top: 15px;
         }
 
         .filter-btn {
@@ -376,47 +362,47 @@
             background: rgba(75, 85, 99, 0.3);
             border: 1px solid transparent;
             border-radius: 8px;
-            color: #d1d5db;
+            color: var(--text-secondary);
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
             transition: all 0.3s;
         }
 
         .filter-btn:hover {
             background: rgba(75, 85, 99, 0.5);
-            border-color: #dc2626;
+            border-color: var(--primary-red);
         }
 
         .filter-btn.active {
             background: rgba(220, 38, 38, 0.2);
-            border-color: #dc2626;
-            color: #dc2626;
+            border-color: var(--primary-red);
+            color: var(--primary-red);
         }
 
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+        .event-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .event-card {
-            background: rgba(55, 65, 81, 0.3);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(75, 85, 99, 0.2);
+        .badge-msc {
+            background: #10b981;
+            color: white;
         }
 
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.2);
-            border-color: rgba(220, 38, 38, 0.3);
+        .badge-new {
+            background: var(--primary-red);
+            color: white;
         }
 
-        /* Messages Page */
+        .badge-soldout {
+            background: #6b7280;
+            color: white;
+        }
+
+        /* Messages */
         .messages-container {
             display: grid;
             grid-template-columns: 350px 1fr;
@@ -425,7 +411,7 @@
         }
 
         .conversations-list {
-            background: rgba(55, 65, 81, 0.3);
+            background: var(--bg-card);
             border-radius: 12px;
             padding: 20px;
             overflow-y: auto;
@@ -453,56 +439,8 @@
             border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
-        .conversation-avatar {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #6b7280, #4b5563);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .conversation-info {
-            flex: 1;
-        }
-
-        .conversation-name {
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .conversation-preview {
-            color: #9ca3af;
-            font-size: 13px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .conversation-time {
-            color: #6b7280;
-            font-size: 11px;
-        }
-
-        .conversation-unread {
-            background: #dc2626;
-            color: white;
-            border-radius: 50%;
-            min-width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
         .chat-window {
-            background: rgba(55, 65, 81, 0.3);
+            background: var(--bg-card);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -511,26 +449,7 @@
 
         .chat-header {
             padding: 20px;
-            border-bottom: 1px solid rgba(75, 85, 99, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .chat-header-info {
-            flex: 1;
-        }
-
-        .chat-header-name {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .chat-header-status {
-            color: #10b981;
-            font-size: 13px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .chat-messages {
@@ -564,233 +483,230 @@
             border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
-        .message-text {
-            color: #ffffff;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .message-time {
-            color: #6b7280;
-            font-size: 11px;
-            margin-top: 5px;
-        }
-
         .chat-input-area {
             padding: 20px;
-            border-top: 1px solid rgba(75, 85, 99, 0.3);
+            border-top: 1px solid var(--border-color);
             display: flex;
             gap: 12px;
         }
 
-        .chat-input {
-            flex: 1;
-            padding: 12px;
-            background: rgba(31, 41, 55, 0.5);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            border-radius: 8px;
-            color: #ffffff;
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
             font-size: 14px;
         }
 
-        .chat-input:focus {
-            outline: none;
-            border-color: #dc2626;
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
         }
 
-        .btn-send {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--primary-red);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
             border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
         }
 
-        .btn-send:hover {
-            background: linear-gradient(135deg, #b91c1c, #991b1b);
+        .tab:hover {
+            color: var(--text-secondary);
         }
 
-        /* Members Page */
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+        .tab.active {
+            color: var(--primary-red);
+            border-bottom-color: var(--primary-red);
         }
 
-        .member-card {
-            background: rgba(55, 65, 81, 0.3);
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Admin Panel Specific */
+        .admin-sidebar {
+            background: var(--bg-card);
             border-radius: 12px;
-            padding: 25px;
-            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-menu-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 5px;
             transition: all 0.3s;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(75, 85, 99, 0.2);
         }
 
-        .member-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.15);
-            border-color: rgba(220, 38, 38, 0.3);
+        .admin-menu-item:hover {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--primary-red);
         }
 
-        .member-avatar-large {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+        .admin-menu-item.active {
+            background: rgba(220, 38, 38, 0.2);
+            color: var(--primary-red);
+        }
+
+        /* Notifications */
+        .notification-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(220, 38, 38, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
+            flex-shrink: 0;
         }
 
-        .member-name {
-            color: #ffffff;
-            font-size: 18px;
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: var(--text-primary);
             font-weight: 600;
             margin-bottom: 5px;
         }
 
-        .member-role {
-            color: #dc2626;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .member-bio {
-            color: #9ca3af;
+        .notification-text {
+            color: var(--text-muted);
             font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
-        .member-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(75, 85, 99, 0.3);
-        }
-
-        .member-stat {
-            text-align: center;
-        }
-
-        .member-stat-value {
-            color: #dc2626;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .member-stat-label {
-            color: #6b7280;
+        .notification-time {
+            color: var(--text-muted);
             font-size: 12px;
-            margin-top: 2px;
+            margin-top: 5px;
         }
 
-        .btn-message {
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            background: transparent;
-            border: 1px solid #dc2626;
-            border-radius: 8px;
-            color: #dc2626;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-message:hover {
-            background: rgba(220, 38, 38, 0.1);
-        }
-
-        /* Profile Page */
-        .profile-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .profile-header {
-            background: rgba(55, 65, 81, 0.3);
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #dc2626, #991b1b);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
-        }
-
-        .profile-name {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .profile-email {
-            color: #9ca3af;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-
-        .profile-stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 30px;
-        }
-
-        .profile-section {
-            background: rgba(55, 65, 81, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .section-title {
-            color: #dc2626;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .preference-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(75, 85, 99, 0.2);
-        }
-
-        .preference-label {
-            color: #d1d5db;
-            font-size: 15px;
-        }
-
+        /* Toggle Switch */
         .toggle-switch {
             position: relative;
             width: 50px;
@@ -821,22 +737,23 @@
             left: 28px;
         }
 
-        .btn-logout {
-            width: 100%;
-            padding: 14px;
-            background: transparent;
-            border: 2px solid #dc2626;
-            border-radius: 8px;
-            color: #dc2626;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* Search Results */
+        .search-results {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 20px;
         }
 
-        .btn-logout:hover {
-            background: rgba(220, 38, 38, 0.1);
+        .search-result-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-result-item:hover {
+            background: rgba(220, 38, 38, 0.05);
         }
 
         /* Responsive */
@@ -850,55 +767,45 @@
             }
             
             .nav-menu {
-                gap: 15px;
+                display: none;
             }
             
-            .events-grid {
+            .grid-3, .grid-4 {
                 grid-template-columns: 1fr;
             }
             
-            .members-grid {
-                grid-template-columns: 1fr;
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        /* Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-red);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
 
-        .page-section.active {
-            animation: slideIn 0.3s ease-out;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #6b7280;
+            color: var(--text-muted);
         }
 
         .empty-state-icon {
             font-size: 64px;
             margin-bottom: 20px;
             opacity: 0.5;
-        }
-
-        .empty-state-text {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .empty-state-subtext {
-            font-size: 14px;
-            color: #4b5563;
         }
     </style>
 </head>
@@ -909,7 +816,7 @@
             <div class="login-logo">
                 <div class="logo-icon">🎸</div>
                 <h1>ALMANACH MSC</h1>
-                <p>Metal Social Club - Plateforme Membres</p>
+                <p style="color: var(--text-muted);">Metal Social Club</p>
             </div>
             
             <form id="loginForm" onsubmit="handleLogin(event)">
@@ -923,16 +830,22 @@
                     <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
                 </div>
                 
-                <button type="submit" class="btn-login">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
                     🤘 Se connecter
                 </button>
             </form>
             
-            <div class="login-divider">ou</div>
+            <div style="text-align: center; margin: 25px 0; color: var(--text-muted);">ou</div>
             
-            <button class="btn-register" onclick="showRegister()">
+            <button class="btn btn-secondary" style="width: 100%;" onclick="showRegisterModal()">
                 Créer un compte MSC
             </button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="#" onclick="showForgotPassword()" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">
+                    Mot de passe oublié ?
+                </a>
+            </div>
         </div>
     </div>
 
@@ -940,80 +853,165 @@
     <div class="app-container" id="appContainer">
         <header>
             <div class="header-content">
-                <div class="logo" onclick="navigateTo('events')">
-                    <div class="logo-icon">🎸</div>
-                    <div>
-                        <h1>ALMANACH MSC</h1>
-                    </div>
+                <div class="logo" onclick="navigateTo('dashboard')">
+                    <div class="logo-icon" style="width: 45px; height: 45px; font-size: 22px;">🎸</div>
+                    <h1>ALMANACH MSC</h1>
                 </div>
                 
                 <nav class="nav-menu">
-                    <a class="nav-item active" onclick="navigateTo('events')">📅 Événements</a>
+                    <a class="nav-item active" onclick="navigateTo('dashboard')">🏠 Accueil</a>
+                    <a class="nav-item" onclick="navigateTo('events')">📅 Événements</a>
                     <a class="nav-item" onclick="navigateTo('messages')">💬 Messages</a>
                     <a class="nav-item" onclick="navigateTo('members')">👥 Membres</a>
-                    <a class="nav-item" onclick="navigateTo('profile')">⚙️ Profil</a>
+                    <a class="nav-item" onclick="navigateTo('bands')">🎵 Groupes</a>
+                    <a class="nav-item" onclick="navigateTo('forum')">💭 Forum</a>
                 </nav>
                 
                 <div class="user-menu">
-                    <button class="notification-btn">
+                    <button class="notification-btn" onclick="navigateTo('notifications')">
                         🔔
                         <span class="notification-badge">3</span>
                     </button>
                     
-                    <div class="user-profile" onclick="navigateTo('profile')">
-                        <div class="user-avatar" id="userAvatar">JM</div>
-                        <span class="user-name" id="userName">Jean Metal</span>
-                    </div>
+                    <div class="user-avatar" onclick="showUserMenu()">JM</div>
                 </div>
             </div>
         </header>
 
         <div class="main-content">
-            <!-- Events Page -->
-            <div class="page-section active" id="eventsPage">
-                <div class="filters">
-                    <input type="text" class="search-box" placeholder="🔍 Rechercher un événement...">
-                    <div class="filter-buttons">
-                        <button class="filter-btn active">Tous</button>
-                        <button class="filter-btn">🎸 Concerts</button>
-                        <button class="filter-btn">🏕️ Festivals</button>
-                        <button class="filter-btn">🎤 Conférences</button>
-                        <button class="filter-btn">🎨 Expositions</button>
-                        <button class="filter-btn">⭐ Sessions MSC</button>
-                    </div>
+            <!-- Dashboard Page -->
+            <div class="page-section active" id="dashboardPage">
+                <div class="page-header">
+                    <h2 class="page-title">🏠 Tableau de bord</h2>
+                    <p class="page-subtitle">Bienvenue Jean Metal ! Voici les dernières nouvelles du MSC</p>
                 </div>
                 
-                <div class="events-grid" id="eventsGrid"></div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Événements ce mois</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">247</div>
+                        <div class="stat-label">Membres actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Messages non lus</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Invitations en attente</div>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">📅 Prochains événements</h3>
+                        <div style="space-y: 15px;">
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+                                <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">Gojira + Knocked Loose</div>
+                                <div style="font-size: 14px; color: var(--text-muted);">15/02/2025 - Zénith de Paris</div>
+                                <button class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 13px;">Détails</button>
+                            </div>
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+                                <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">Session MSC #12</div>
+                                <div style="font-size: 14px; color: var(--text-muted);">20/02/2025 - Le Klub</div>
+                                <span class="event-badge badge-msc">MSC EXCLUSIVE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">💬 Messages récents</h3>
+                        <div style="space-y: 15px;">
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span style="font-weight: bold; color: var(--text-primary);">Alice Petrucci</span>
+                                    <span style="font-size: 12px; color: var(--text-muted);">14:32</span>
+                                </div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">On se retrouve au Hellfest ?</div>
+                            </div>
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span style="font-weight: bold; color: var(--text-primary);">Bob Davidson</span>
+                                    <span style="font-size: 12px; color: var(--text-muted);">Hier</span>
+                                </div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">J'ai les billets pour Gojira !</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">🔥 Activité du forum</h3>
+                        <div style="space-y: 15px;">
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+                                <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">Top albums 2024</div>
+                                <div style="font-size: 14px; color: var(--text-muted);">42 réponses • Dernier: il y a 2h</div>
+                            </div>
+                            <div style="padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">Recherche guitariste</div>
+                                <div style="font-size: 14px; color: var(--text-muted);">8 réponses • Dernier: il y a 5h</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Page -->
+            <div class="page-section" id="eventsPage">
+                <div class="page-header">
+                    <h2 class="page-title">📅 Événements</h2>
+                    <p class="page-subtitle">Tous les événements Metal à venir</p>
+                </div>
+
+                <div class="event-filters">
+                    <input type="text" class="form-input" placeholder="🔍 Rechercher un événement..." id="eventSearch">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterEvents('all')">Tous</button>
+                        <button class="filter-btn" onclick="filterEvents('concert')">🎸 Concerts</button>
+                        <button class="filter-btn" onclick="filterEvents('festival')">🏕️ Festivals</button>
+                        <button class="filter-btn" onclick="filterEvents('msc')">⭐ Sessions MSC</button>
+                        <button class="filter-btn" onclick="filterEvents('conference')">🎤 Conférences</button>
+                        <button class="filter-btn" onclick="filterEvents('expo')">🎨 Expositions</button>
+                    </div>
+                </div>
+
+                <div class="grid-3" id="eventsGrid">
+                    <!-- Events will be loaded here -->
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 30px;" onclick="showCreateEventModal()">
+                    + Proposer un événement
+                </button>
             </div>
 
             <!-- Messages Page -->
             <div class="page-section" id="messagesPage">
                 <div class="messages-container">
                     <div class="conversations-list">
-                        <h3 style="color: #dc2626; margin-bottom: 20px;">Conversations</h3>
-                        <div id="conversationsList"></div>
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">Conversations</h3>
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 20px;" onclick="showNewMessageModal()">
+                            + Nouveau message
+                        </button>
+                        <div id="conversationsList">
+                            <!-- Conversations will be loaded here -->
+                        </div>
                     </div>
                     
                     <div class="chat-window">
                         <div class="chat-header">
-                            <div class="conversation-avatar" id="chatAvatar">AP</div>
-                            <div class="chat-header-info">
-                                <div class="chat-header-name" id="chatName">Alice Petrucci</div>
-                                <div class="chat-header-status">En ligne</div>
-                            </div>
+                            <h3 style="color: var(--text-primary);">Sélectionnez une conversation</h3>
                         </div>
-                        
                         <div class="chat-messages" id="chatMessages">
                             <div class="empty-state">
                                 <div class="empty-state-icon">💬</div>
-                                <div class="empty-state-text">Sélectionnez une conversation</div>
-                                <div class="empty-state-subtext">ou commencez-en une nouvelle avec un membre</div>
+                                <p>Sélectionnez une conversation ou démarrez-en une nouvelle</p>
                             </div>
                         </div>
-                        
                         <div class="chat-input-area">
-                            <input type="text" class="chat-input" id="chatInput" placeholder="Tapez votre message...">
-                            <button class="btn-send" onclick="sendMessage()">Envoyer</button>
+                            <input type="text" class="form-input" id="chatInput" placeholder="Tapez votre message..." disabled>
+                            <button class="btn btn-primary" onclick="sendMessage()" disabled>Envoyer</button>
                         </div>
                     </div>
                 </div>
@@ -1021,62 +1019,359 @@
 
             <!-- Members Page -->
             <div class="page-section" id="membersPage">
-                <h2 style="color: #dc2626; margin-bottom: 30px;">Membres du Metal Social Club</h2>
-                <div class="members-grid" id="membersGrid"></div>
+                <div class="page-header">
+                    <h2 class="page-title">👥 Membres</h2>
+                    <p class="page-subtitle">La communauté Metal Social Club</p>
+                </div>
+
+                <div class="card" style="margin-bottom: 30px;">
+                    <input type="text" class="form-input" placeholder="🔍 Rechercher un membre..." id="memberSearch">
+                </div>
+
+                <div class="grid-4" id="membersGrid">
+                    <!-- Members will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Bands Page -->
+            <div class="page-section" id="bandsPage">
+                <div class="page-header">
+                    <h2 class="page-title">🎵 Groupes & Artistes</h2>
+                    <p class="page-subtitle">Base de données des groupes Metal</p>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('bands-featured')">En vedette</button>
+                    <button class="tab" onclick="switchTab('bands-local')">Scène locale</button>
+                    <button class="tab" onclick="switchTab('bands-international')">International</button>
+                    <button class="tab" onclick="switchTab('bands-emerging')">Découvertes</button>
+                </div>
+
+                <div class="tab-content active" id="bands-featured">
+                    <div class="grid-3">
+                        <div class="card">
+                            <h3 style="color: var(--text-primary); margin-bottom: 10px;">Gojira</h3>
+                            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Progressive Death Metal • France</p>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
+                                Groupe français mondialement reconnu pour son metal progressif et ses textes engagés.
+                            </p>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-primary" style="flex: 1;">Voir profil</button>
+                                <button class="btn btn-secondary" style="flex: 1;">Suivre</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3 style="color: var(--text-primary); margin-bottom: 10px;">Alcest</h3>
+                            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Blackgaze • France</p>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
+                                Pionniers du blackgaze, mélange unique de black metal et de shoegaze atmosphérique.
+                            </p>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-primary" style="flex: 1;">Voir profil</button>
+                                <button class="btn btn-secondary" style="flex: 1;">Suivre</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="bands-local">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎸</div>
+                        <p>Découvrez bientôt les groupes de la scène locale parisienne</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forum Page -->
+            <div class="page-section" id="forumPage">
+                <div class="page-header">
+                    <h2 class="page-title">💭 Forum</h2>
+                    <p class="page-subtitle">Discussions de la communauté</p>
+                </div>
+
+                <button class="btn btn-primary" style="margin-bottom: 30px;" onclick="showNewTopicModal()">
+                    + Nouveau sujet
+                </button>
+
+                <div class="card">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sujet</th>
+                                    <th>Catégorie</th>
+                                    <th>Réponses</th>
+                                    <th>Dernier message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">
+                                            Top albums Metal 2024
+                                        </div>
+                                        <div style="font-size: 13px; color: var(--text-muted);">
+                                            Par Alice Petrucci
+                                        </div>
+                                    </td>
+                                    <td><span class="event-badge badge-new">Discussion</span></td>
+                                    <td>42</td>
+                                    <td>Il y a 2 heures</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">
+                                            Recherche guitariste pour groupe Death
+                                        </div>
+                                        <div style="font-size: 13px; color: var(--text-muted);">
+                                            Par Bob Davidson
+                                        </div>
+                                    </td>
+                                    <td><span class="event-badge badge-msc">Annonces</span></td>
+                                    <td>8</td>
+                                    <td>Il y a 5 heures</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: bold; color: var(--text-primary); margin-bottom: 5px;">
+                                            Hellfest 2025 - Organisation covoiturage
+                                        </div>
+                                        <div style="font-size: 13px; color: var(--text-muted);">
+                                            Par Charlie Roux
+                                        </div>
+                                    </td>
+                                    <td><span class="event-badge badge-new">Événements</span></td>
+                                    <td>23</td>
+                                    <td>Hier</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Page -->
+            <div class="page-section" id="notificationsPage">
+                <div class="page-header">
+                    <h2 class="page-title">🔔 Notifications</h2>
+                    <p class="page-subtitle">Restez informé de l'activité du MSC</p>
+                </div>
+
+                <div class="notification-list">
+                    <div class="notification-item">
+                        <div class="notification-icon">📅</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Nouvel événement : Iron Maiden</div>
+                            <div class="notification-text">Un nouveau concert a été ajouté : Iron Maiden au Stade de France le 15/07/2025</div>
+                            <div class="notification-time">Il y a 2 heures</div>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-icon">💬</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Nouveau message de Alice Petrucci</div>
+                            <div class="notification-text">On se retrouve au Hellfest ?</div>
+                            <div class="notification-time">Il y a 3 heures</div>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-icon">👥</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Nouvelle demande de connexion</div>
+                            <div class="notification-text">Frank Weber souhaite vous ajouter à ses connexions</div>
+                            <div class="notification-time">Hier</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Profile Page -->
             <div class="page-section" id="profilePage">
-                <div class="profile-container">
-                    <div class="profile-header">
-                        <div class="profile-avatar">JM</div>
-                        <div class="profile-name">Jean Metal</div>
-                        <div class="profile-email">jean.metal@msc.fr</div>
-                        <div class="profile-stats-row">
-                            <div class="member-stat">
-                                <div class="member-stat-value">42</div>
-                                <div class="member-stat-label">Événements</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-value">156</div>
-                                <div class="member-stat-label">Connexions</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-value">2021</div>
-                                <div class="member-stat-label">Membre depuis</div>
-                            </div>
+                <div class="page-header">
+                    <h2 class="page-title">⚙️ Mon Profil</h2>
+                    <p class="page-subtitle">Gérez vos informations et préférences</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card" style="grid-column: span 2;">
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">Informations personnelles</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Nom complet</label>
+                            <input type="text" class="form-input" value="Jean Metal">
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" value="jean.metal@msc.fr">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            <textarea class="form-textarea">Passionné de Metal depuis 20 ans. Fan de Death, Black et Progressive.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Genres préférés</label>
+                            <input type="text" class="form-input" value="Death Metal, Black Metal, Progressive Metal">
+                        </div>
+                        
+                        <button class="btn btn-primary">Sauvegarder les modifications</button>
                     </div>
                     
-                    <div class="profile-section">
-                        <h3 class="section-title">🎸 Préférences Musicales</h3>
-                        <div style="color: #d1d5db; line-height: 1.8;">
-                            Death Metal • Black Metal • Thrash • Progressive • Doom
+                    <div class="card">
+                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">Statistiques</h3>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.2);">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Événements participés</div>
                         </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.2); margin-top: 15px;">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Messages envoyés</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.2); margin-top: 15px;">
+                            <div class="stat-value">2021</div>
+                            <div class="stat-label">Membre depuis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="color: var(--primary-red); margin-bottom: 20px;">Préférences de notifications</h3>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                        <span>Nouveaux événements</span>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
                     </div>
                     
-                    <div class="profile-section">
-                        <h3 class="section-title">🔔 Notifications</h3>
-                        <div class="preference-item">
-                            <span class="preference-label">Nouveaux événements</span>
-                            <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                        </div>
-                        <div class="preference-item">
-                            <span class="preference-label">Messages privés</span>
-                            <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
-                        </div>
-                        <div class="preference-item">
-                            <span class="preference-label">Rappels d'événements</span>
-                            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-                        </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                        <span>Messages privés</span>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
                     </div>
                     
-                    <div class="profile-section">
-                        <h3 class="section-title">⚙️ Paramètres</h3>
-                        <button class="btn-logout" onclick="logout()">
-                            Déconnexion
-                        </button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                        <span>Mentions sur le forum</span>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
                     </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                        <span>Newsletter hebdomadaire</span>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 30px;" onclick="logout()">
+                    Déconnexion
+                </button>
+            </div>
+
+            <!-- Admin Page -->
+            <div class="page-section" id="adminPage">
+                <div class="page-header">
+                    <h2 class="page-title">🛠️ Administration</h2>
+                    <p class="page-subtitle">Gestion de la plateforme MSC</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 30px;">
+                    <div class="admin-sidebar">
+                        <a class="admin-menu-item active">📊 Tableau de bord</a>
+                        <a class="admin-menu-item">👥 Gestion membres</a>
+                        <a class="admin-menu-item">📅 Gestion événements</a>
+                        <a class="admin-menu-item">💬 Modération forum</a>
+                        <a class="admin-menu-item">📈 Statistiques</a>
+                        <a class="admin-menu-item">⚙️ Paramètres</a>
+                    </div>
+                    
+                    <div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">247</div>
+                                <div class="stat-label">Membres totaux</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">89</div>
+                                <div class="stat-label">Événements créés</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">1,234</div>
+                                <div class="stat-label">Messages forum</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">45</div>
+                                <div class="stat-label">Groupes référencés</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <h3 style="color: var(--primary-red); margin-bottom: 20px;">Actions rapides</h3>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <button class="btn btn-primary">+ Ajouter un événement</button>
+                                <button class="btn btn-primary">+ Inviter un membre</button>
+                                <button class="btn btn-secondary">Envoyer newsletter</button>
+                                <button class="btn btn-secondary">Exporter données</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">×</button>
+            <h2 style="color: var(--primary-red); margin-bottom: 20px;">Créer un compte MSC</h2>
+            
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">Nom complet</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Genres préférés</label>
+                    <input type="text" class="form-input" placeholder="Death Metal, Black Metal...">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Créer mon compte
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('eventModal')">×</button>
+            <h2 style="color: var(--primary-red); margin-bottom: 20px;">Détails de l'événement</h2>
+            <div id="eventModalContent"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="userMenuModal">
+        <div class="modal-content" style="max-width: 300px;">
+            <div style="text-align: center; padding: 20px;">
+                <div style="width: 80px; height: 80px; margin: 0 auto 15px; background: linear-gradient(135deg, var(--primary-red), var(--dark-red)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                    JM
+                </div>
+                <h3 style="color: var(--text-primary); margin-bottom: 5px;">Jean Metal</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">jean.metal@msc.fr</p>
+                
+                <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
+                    <a onclick="navigateTo('profile'); closeModal('userMenuModal')" style="display: block; padding: 10px; color: var(--text-secondary); text-decoration: none; cursor: pointer;">⚙️ Mon profil</a>
+                    <a onclick="navigateTo('admin'); closeModal('userMenuModal')" style="display: block; padding: 10px; color: var(--text-secondary); text-decoration: none; cursor: pointer;">🛠️ Administration</a>
+                    <a onclick="logout()" style="display: block; padding: 10px; color: var(--primary-red); text-decoration: none; cursor: pointer;">🚪 Déconnexion</a>
                 </div>
             </div>
         </div>
@@ -1092,6 +1387,8 @@
                 time: "19:00",
                 location: "Zénith de Paris",
                 price: "45€",
+                category: "concert",
+                description: "Une soirée metal progressive exceptionnelle",
                 attendees: 24
             },
             {
@@ -1101,6 +1398,8 @@
                 time: "20:00",
                 location: "Le Klub",
                 price: "15€",
+                category: "msc",
+                description: "Soirée exclusive avec 3 groupes locaux",
                 attendees: 18,
                 isMSC: true
             },
@@ -1111,6 +1410,8 @@
                 time: "12:00",
                 location: "Clisson",
                 price: "250€",
+                category: "festival",
+                description: "Le plus grand festival metal de France",
                 attendees: 42
             },
             {
@@ -1120,325 +1421,269 @@
                 time: "18:00",
                 location: "Stade de France",
                 price: "85€",
+                category: "concert",
+                description: "Le retour des légendes",
                 attendees: 67
             },
             {
                 id: 5,
-                title: "Black Metal History",
+                title: "Conférence Black Metal",
                 date: "05/03/2025",
                 time: "18:30",
                 location: "BNF Paris",
                 price: "Gratuit",
+                category: "conference",
+                description: "Histoire du black metal norvégien",
                 attendees: 12
             },
             {
                 id: 6,
-                title: "Metal & Art Expo",
+                title: "Expo Metal & Art",
                 date: "10/03/2025",
                 time: "10:00",
                 location: "Centre Pompidou",
                 price: "12€",
+                category: "expo",
+                description: "L'influence du metal dans l'art",
                 attendees: 8
             }
         ];
 
-        const conversations = [
-            {
-                id: 1,
-                name: "Alice Petrucci",
-                initials: "AP",
-                lastMessage: "On se retrouve au Hellfest ?",
-                time: "14:32",
-                unread: 2
-            },
-            {
-                id: 2,
-                name: "Bob Davidson",
-                initials: "BD",
-                lastMessage: "J'ai les billets pour Gojira !",
-                time: "Hier",
-                unread: 0
-            },
-            {
-                id: 3,
-                name: "Charlie Roux",
-                initials: "CR",
-                lastMessage: "Tu viens à la session MSC ?",
-                time: "Lundi",
-                unread: 1
-            },
-            {
-                id: 4,
-                name: "Groupe: Orga MSC",
-                initials: "MSC",
-                lastMessage: "Diana: Nouvelle date confirmée",
-                time: "Dimanche",
-                unread: 5
-            }
-        ];
-
         const members = [
-            {
-                name: "Alice Petrucci",
-                initials: "AP",
-                role: "Membre Fondateur",
-                bio: "Passionnée de Death Metal technique",
-                events: 89,
-                since: "2019"
-            },
-            {
-                name: "Bob Davidson",
-                initials: "BD",
-                role: "Organisateur",
-                bio: "Spécialiste du Black Metal norvégien",
-                events: 156,
-                since: "2020"
-            },
-            {
-                name: "Charlie Roux",
-                initials: "CR",
-                role: "Membre Actif",
-                bio: "Fan de Thrash et Speed Metal",
-                events: 45,
-                since: "2021"
-            },
-            {
-                name: "Diana Silva",
-                initials: "DS",
-                role: "Administrateur",
-                bio: "Organisatrice des Sessions MSC",
-                events: 203,
-                since: "2018"
-            },
-            {
-                name: "Eve Thompson",
-                initials: "ET",
-                role: "Membre",
-                bio: "Doom & Sludge enthusiast",
-                events: 23,
-                since: "2022"
-            },
-            {
-                name: "Frank Weber",
-                initials: "FW",
-                role: "Photographe MSC",
-                bio: "Capture l'énergie des concerts",
-                events: 178,
-                since: "2019"
-            }
+            { name: "Alice Petrucci", initials: "AP", role: "Fondateur", bio: "Death Metal", events: 89 },
+            { name: "Bob Davidson", initials: "BD", role: "Organisateur", bio: "Black Metal", events: 156 },
+            { name: "Charlie Roux", initials: "CR", role: "Membre", bio: "Thrash Metal", events: 45 },
+            { name: "Diana Silva", initials: "DS", role: "Admin", bio: "Doom Metal", events: 203 },
+            { name: "Eve Thompson", initials: "ET", role: "Membre", bio: "Progressive", events: 23 },
+            { name: "Frank Weber", initials: "FW", role: "Photographe", bio: "All genres", events: 178 }
         ];
 
-        const messages = [
-            {
-                sender: "Alice Petrucci",
-                text: "Salut Jean ! Tu as vu la nouvelle date pour Gojira ?",
-                time: "14:28",
-                sent: false
-            },
-            {
-                sender: "Jean Metal",
-                text: "Oui ! J'ai déjà pris mes places 🤘",
-                time: "14:30",
-                sent: true
-            },
-            {
-                sender: "Alice Petrucci",
-                text: "Parfait ! On se retrouve au Hellfest ?",
-                time: "14:32",
-                sent: false
-            }
+        const conversations = [
+            { id: 1, name: "Alice Petrucci", lastMessage: "On se retrouve au Hellfest ?", time: "14:32", unread: 2 },
+            { id: 2, name: "Bob Davidson", lastMessage: "J'ai les billets pour Gojira !", time: "Hier", unread: 0 },
+            { id: 3, name: "Charlie Roux", lastMessage: "Tu viens à la session MSC ?", time: "Lundi", unread: 1 }
         ];
 
         // State
         let currentUser = null;
-        let currentPage = 'events';
-        let currentConversation = null;
+        let currentPage = 'dashboard';
 
-        // Login Functions
+        // Functions
         function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            currentUser = {
-                name: 'Jean Metal',
-                email: email,
-                initials: 'JM'
-            };
-            
+            currentUser = { name: 'Jean Metal', email: 'jean.metal@msc.fr' };
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('appContainer').classList.add('active');
-            
             loadEvents();
-            loadConversations();
             loadMembers();
-        }
-
-        function showRegister() {
-            alert('Fonction d\'inscription bientôt disponible ! Contactez un administrateur MSC pour obtenir un accès.');
+            loadConversations();
         }
 
         function logout() {
-            currentUser = null;
-            document.getElementById('appContainer').classList.remove('active');
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('loginForm').reset();
+            if(confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                currentUser = null;
+                document.getElementById('appContainer').classList.remove('active');
+                document.getElementById('loginPage').style.display = 'flex';
+            }
         }
 
-        // Navigation
         function navigateTo(page) {
-            // Update nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
             // Hide all pages
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.remove('active');
             });
             
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
             // Show selected page
             document.getElementById(page + 'Page').classList.add('active');
+            
+            // Update active nav
+            event.target?.classList.add('active');
+            
             currentPage = page;
         }
 
-        // Events Functions
         function loadEvents() {
             const grid = document.getElementById('eventsGrid');
+            if(!grid) return;
+            
             grid.innerHTML = events.map(event => `
-                <div class="event-card">
-                    <div style="padding: 25px;">
-                        ${event.isMSC ? '<div style="background: #10b981; color: white; display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">⭐ SESSION MSC</div>' : ''}
-                        <h3 style="color: #ffffff; font-size: 20px; margin-bottom: 15px;">${event.title}</h3>
-                        <div style="color: #d1d5db; font-size: 14px; line-height: 1.8;">
-                            <div>📅 ${event.date} - ${event.time}</div>
-                            <div>📍 ${event.location}</div>
-                            <div>💶 ${event.price}</div>
-                        </div>
-                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(75, 85, 99, 0.3);">
-                            <div style="color: #9ca3af; font-size: 14px; margin-bottom: 12px;">
-                                👥 ${event.attendees} participants MSC
-                            </div>
-                            <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #dc2626, #b91c1c); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer;">
-                                Participer
-                            </button>
-                        </div>
+                <div class="card" onclick="showEventDetails(${event.id})">
+                    ${event.isMSC ? '<span class="event-badge badge-msc">⭐ SESSION MSC</span>' : ''}
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">${event.title}</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
+                        ${event.description}
+                    </p>
+                    <div style="color: var(--text-muted); font-size: 14px; line-height: 1.8;">
+                        <div>📅 ${event.date} - ${event.time}</div>
+                        <div>📍 ${event.location}</div>
+                        <div>💶 ${event.price}</div>
+                        <div>👥 ${event.attendees} participants</div>
                     </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                        Participer
+                    </button>
                 </div>
             `).join('');
         }
 
-        // Messages Functions
+        function loadMembers() {
+            const grid = document.getElementById('membersGrid');
+            if(!grid) return;
+            
+            grid.innerHTML = members.map(member => `
+                <div class="card" style="text-align: center;">
+                    <div style="width: 60px; height: 60px; margin: 0 auto 15px; background: linear-gradient(135deg, #6b7280, #4b5563); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">
+                        ${member.initials}
+                    </div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 5px;">${member.name}</h4>
+                    <p style="color: var(--primary-red); font-size: 13px; margin-bottom: 10px;">${member.role}</p>
+                    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">${member.bio}</p>
+                    <div style="display: flex; justify-content: center; gap: 30px; margin: 15px 0;">
+                        <div>
+                            <div style="color: var(--primary-red); font-weight: bold;">${member.events}</div>
+                            <div style="color: var(--text-muted); font-size: 12px;">Events</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%;">
+                        💬 Message
+                    </button>
+                </div>
+            `).join('');
+        }
+
         function loadConversations() {
             const list = document.getElementById('conversationsList');
-            list.innerHTML = conversations.map((conv, index) => `
-                <div class="conversation-item ${index === 0 ? 'active' : ''}" onclick="selectConversation(${conv.id})">
-                    <div class="conversation-avatar">${conv.initials}</div>
-                    <div class="conversation-info">
-                        <div class="conversation-name">${conv.name}</div>
-                        <div class="conversation-preview">${conv.lastMessage}</div>
+            if(!list) return;
+            
+            list.innerHTML = conversations.map(conv => `
+                <div class="conversation-item" onclick="selectConversation(${conv.id})">
+                    <div style="width: 40px; height: 40px; background: #4b5563; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        ${conv.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="color: var(--text-primary); font-weight: 600;">${conv.name}</div>
+                        <div style="color: var(--text-muted); font-size: 13px;">${conv.lastMessage}</div>
                     </div>
                     <div>
-                        <div class="conversation-time">${conv.time}</div>
-                        ${conv.unread > 0 ? `<div class="conversation-unread">${conv.unread}</div>` : ''}
+                        <div style="color: var(--text-muted); font-size: 12px;">${conv.time}</div>
+                        ${conv.unread > 0 ? `<div style="background: var(--primary-red); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-top: 5px;">${conv.unread}</div>` : ''}
                     </div>
                 </div>
             `).join('');
         }
 
         function selectConversation(id) {
-            currentConversation = conversations.find(c => c.id === id);
-            
-            // Update conversation list
-            document.querySelectorAll('.conversation-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-            
-            // Update chat header
-            document.getElementById('chatAvatar').textContent = currentConversation.initials;
-            document.getElementById('chatName').textContent = currentConversation.name;
-            
-            // Load messages
-            loadMessages();
-        }
-
-        function loadMessages() {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = messages.map(msg => `
-                <div class="message ${msg.sent ? 'sent' : 'received'}">
+            const conv = conversations.find(c => c.id === id);
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message">
                     <div class="message-bubble">
-                        <div class="message-text">${msg.text}</div>
-                        <div class="message-time">${msg.time}</div>
+                        <div style="color: var(--text-primary);">${conv.lastMessage}</div>
+                        <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">${conv.time}</div>
                     </div>
                 </div>
-            `).join('');
-            container.scrollTop = container.scrollHeight;
+            `;
+            document.getElementById('chatInput').disabled = false;
+            document.querySelector('.chat-input-area button').disabled = false;
         }
 
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            
-            if (!text || !currentConversation) return;
-            
-            const newMessage = {
-                sender: "Jean Metal",
-                text: text,
-                time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-                sent: true
-            };
-            
-            messages.push(newMessage);
-            loadMessages();
-            input.value = '';
-        }
-
-        // Members Functions
-        function loadMembers() {
-            const grid = document.getElementById('membersGrid');
-            grid.innerHTML = members.map(member => `
-                <div class="member-card">
-                    <div class="member-avatar-large">${member.initials}</div>
-                    <div class="member-name">${member.name}</div>
-                    <div class="member-role">${member.role}</div>
-                    <div class="member-bio">${member.bio}</div>
-                    <div class="member-stats">
-                        <div class="member-stat">
-                            <div class="member-stat-value">${member.events}</div>
-                            <div class="member-stat-label">Événements</div>
-                        </div>
-                        <div class="member-stat">
-                            <div class="member-stat-value">${member.since}</div>
-                            <div class="member-stat-label">Membre depuis</div>
+        function showEventDetails(id) {
+            const event = events.find(e => e.id === id);
+            document.getElementById('eventModalContent').innerHTML = `
+                <div>
+                    ${event.isMSC ? '<span class="event-badge badge-msc">⭐ SESSION MSC EXCLUSIVE</span>' : ''}
+                    <h3 style="color: var(--text-primary); margin: 15px 0;">${event.title}</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        ${event.description}
+                    </p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="color: var(--text-secondary); line-height: 2;">
+                            <div>📅 <strong>Date :</strong> ${event.date} à ${event.time}</div>
+                            <div>📍 <strong>Lieu :</strong> ${event.location}</div>
+                            <div>💶 <strong>Prix :</strong> ${event.price}</div>
+                            <div>👥 <strong>Participants :</strong> ${event.attendees} membres MSC</div>
                         </div>
                     </div>
-                    <button class="btn-message" onclick="startConversation('${member.name}')">
-                        💬 Envoyer un message
-                    </button>
+                    <div style="display: flex; gap: 15px;">
+                        <button class="btn btn-primary" style="flex: 1;">Je participe !</button>
+                        <button class="btn btn-secondary" style="flex: 1;">Partager</button>
+                    </div>
                 </div>
-            `).join('');
+            `;
+            document.getElementById('eventModal').classList.add('active');
         }
 
-        function startConversation(memberName) {
-            navigateTo('messages');
-            alert(`Conversation avec ${memberName} ouverte !`);
+        function filterEvents(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            // Filter logic here
+            loadEvents();
         }
 
-        // Profile Functions
         function toggleSwitch(element) {
             element.classList.toggle('active');
         }
 
-        // Enter key for chat
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatInput = document.getElementById('chatInput');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        sendMessage();
-                    }
-                });
+        function showRegisterModal() {
+            document.getElementById('registerModal').classList.add('active');
+        }
+
+        function showUserMenu() {
+            document.getElementById('userMenuModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function showForgotPassword() {
+            alert('Un email de réinitialisation sera envoyé à votre adresse.');
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            alert('Inscription réussie ! Un administrateur validera votre compte.');
+            closeModal('registerModal');
+        }
+
+        function showCreateEventModal() {
+            alert('Formulaire de création d\'événement à venir');
+        }
+
+        function showNewMessageModal() {
+            alert('Nouveau message à venir');
+        }
+
+        function showNewTopicModal() {
+            alert('Nouveau sujet de forum à venir');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            if(input.value.trim()) {
+                // Send message logic
+                input.value = '';
             }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId)?.classList.add('active');
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if(e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
