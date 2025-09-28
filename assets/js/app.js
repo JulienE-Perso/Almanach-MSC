@@ -117,6 +117,45 @@ const seedData = {
             avatar: 'LT'
         }
     ],
+    suggestedEvents: [
+        {
+            id: 'sug-bloodmoon',
+            title: 'Bloodmoon Collective - Release Party',
+            category: 'concert',
+            startsAt: '2025-02-28T21:00:00',
+            location: 'Le Trabendo',
+            city: 'Paris',
+            country: 'FR',
+            price: 22,
+            currency: 'EUR',
+            description: 'Release party avec guests sludge / post-hardcore, proposé par la communauté.',
+            link: 'https://dice.fm',
+            submittedBy: { memberId: 'mem-ines', name: 'Inès Moreau' },
+            submittedAt: '2025-02-08T09:45:00',
+            status: 'pending',
+            votes: 14,
+            notes: "Besoin d'un partenariat photo / recap."
+        },
+        {
+            id: 'sug-neurosis',
+            title: 'Neurosis + Amenra',
+            category: 'concert',
+            startsAt: '2025-04-05T20:00:00',
+            location: 'Ancienne Belgique',
+            city: 'Bruxelles',
+            country: 'BE',
+            price: 48,
+            currency: 'EUR',
+            description: 'Co-plateau culte proposé par un membre MSC Belgique.',
+            link: 'https://www.abconcerts.be',
+            submittedBy: { memberId: 'mem-luc', name: 'Luc Tremblay' },
+            submittedAt: '2025-02-05T18:20:00',
+            status: 'approved',
+            votes: 32,
+            notes: '4 membres intéressés pour un covoiturage depuis Lille.'
+        }
+    ],
+
     events: [
         {
             id: 'evt-gojira',
@@ -543,7 +582,16 @@ const translations = {
             messageSent: 'Message envoyé',
             topicCreated: 'Sujet publié',
             eventCreated: 'Événement ajouté au planning',
-            forgotPassword: 'Un email de réinitialisation vient d’être envoyé.'
+            forgotPassword: 'Un email de réinitialisation vient d’être envoyé.',
+            memberSuggestionsTitle: '🎁 Suggestions des membres',
+            memberSuggestionsSubtitle: 'Concerts proposés par la communauté MSC',
+            suggestionStatusPending: 'En validation',
+            suggestionStatusApproved: 'Validée',
+            suggestionStatusRejected: 'Refusée',
+            suggestionSubmitted: 'Suggestions envoyée à l’équipe MSC',
+            suggestionShared: 'Suggestion partagée aux membres intéressés',
+            noSuggestions: 'Aucune suggestion pour le moment. Proposez un concert !',
+            loginRequired: 'Veuillez vous connecter pour proposer un concert.'
         },
         categories: {
             all: 'Tous',
@@ -620,7 +668,16 @@ const translations = {
             messageSent: 'Message sent',
             topicCreated: 'Topic published',
             eventCreated: 'Event added to the calendar',
-            forgotPassword: 'A reset email has just been sent.'
+            forgotPassword: 'A reset email has just been sent.',
+            memberSuggestionsTitle: '🎁 Member Suggestions',
+            memberSuggestionsSubtitle: 'Concerts proposed by the MSC community',
+            suggestionStatusPending: 'Pending review',
+            suggestionStatusApproved: 'Approved',
+            suggestionStatusRejected: 'Declined',
+            suggestionSubmitted: 'Suggestion sent to the MSC team',
+            suggestionShared: 'Suggestion shared with interested members',
+            noSuggestions: 'No suggestion yet. Share a concert with the crew!',
+            loginRequired: 'Please log in to submit a concert.'
         },
         categories: {
             all: 'All',
@@ -651,6 +708,7 @@ const state = {
     currentConversationId: null,
     currentUserId: null,
     events: [],
+    suggestedEvents: [],
     members: [],
     memberById: new Map(),
     conversations: [],
@@ -709,6 +767,7 @@ function hydrateState() {
     state.members = seedData.members.map((member) => ({ ...member }));
     state.memberById = new Map(state.members.map((member) => [member.id, member]));
     state.events = seedData.events.map((event) => ({ ...event, participants: [...event.participants] }));
+    state.suggestedEvents = seedData.suggestedEvents.map((event) => ({ ...event, submittedBy: { ...event.submittedBy } }));
     state.conversations = seedData.conversations.map((conversation) => ({
         ...conversation,
         messages: conversation.messages.map((message) => ({ ...message, readBy: [...message.readBy] }))
@@ -740,6 +799,9 @@ function cacheDom() {
     dom.eventSearch = document.getElementById('eventSearch');
     dom.eventFilters = document.querySelector('.filter-buttons');
     dom.eventsGrid = document.getElementById('eventsGrid');
+    dom.suggestionsGrid = document.getElementById('suggestionsGrid');
+    dom.suggestionsTitle = document.getElementById('suggestionsTitle');
+    dom.suggestionsSubtitle = document.getElementById('suggestionsSubtitle');
     dom.membersGrid = document.getElementById('membersGrid');
     dom.memberSearch = document.getElementById('memberSearch');
     dom.conversationsList = document.getElementById('conversationsList');
@@ -781,7 +843,7 @@ function bindEvents() {
     dom.nav.addEventListener('click', handleNavClick);
     dom.eventSearch.addEventListener('input', handleEventSearch);
     dom.eventFilters.addEventListener('click', handleFilterClick);
-    dom.eventsGrid.addEventListener('click', handleEventsGridClick);
+    // Events grid clicks are now handled by handleGlobalActions
     dom.memberSearch.addEventListener('input', handleMemberSearch);
     dom.membersGrid.addEventListener('click', handleMembersGridClick);
     dom.conversationsList.addEventListener('click', handleConversationSelect);
@@ -818,6 +880,51 @@ function attachModalClosers() {
 function handleGlobalActions(event) {
     const ticketTarget = event.target.closest('[data-platform-url]');
     if (handleTicketingInteraction(ticketTarget)) {
+        return;
+    }
+
+    // Handle data-role buttons (like event details)
+    const roleButton = event.target.closest('[data-role]');
+    if (roleButton) {
+        const { role } = roleButton.dataset;
+        switch (role) {
+            case 'open-detail': {
+                const eventId = roleButton.dataset.eventId;
+                if (eventId) {
+                    openEventModal(eventId);
+                }
+                break;
+            }
+            case 'toggle-participation': {
+                if (!state.currentUserId) {
+                    showToast(translate('labels.loginRequired'), 'error');
+                    break;
+                }
+                const participationEventId = roleButton.dataset.eventId;
+                if (participationEventId) {
+                    toggleParticipation(participationEventId);
+                }
+                break;
+            }
+            case 'open-suggestion': {
+                const suggestionId = roleButton.dataset.suggestionId;
+                if (suggestionId) {
+                    openSuggestionModal(suggestionId);
+                }
+                break;
+            }
+            case 'share-suggestion': {
+                if (!state.currentUserId) {
+                    showToast(translate('labels.loginRequired'), 'error');
+                    break;
+                }
+                const suggestionId = roleButton.dataset.suggestionId;
+                if (suggestionId) {
+                    shareSuggestion(suggestionId);
+                }
+                break;
+            }
+        }
         return;
     }
 
@@ -979,6 +1086,7 @@ function handleRegisterSubmit(event) {
 function handleEventSearch(event) {
     state.eventSearchTerm = event.target.value.trim().toLowerCase();
     renderEvents();
+    renderMemberSuggestions();
 }
 
 function handleFilterClick(event) {
@@ -990,28 +1098,10 @@ function handleFilterClick(event) {
     document.querySelectorAll('.filter-btn').forEach((btn) => btn.classList.remove('active'));
     button.classList.add('active');
     renderEvents();
+    renderMemberSuggestions();
 }
 
-function handleEventsGridClick(event) {
-    const ticketTarget = event.target.closest('[data-platform-url]');
-    if (handleTicketingInteraction(ticketTarget)) {
-        return;
-    }
-
-    const button = event.target.closest('[data-event-id]');
-    if (!button) return;
-    const eventId = button.dataset.eventId;
-    if (!eventId) return;
-
-    if (button.dataset.role === 'open-detail') {
-        openEventModal(eventId);
-        return;
-    }
-
-    if (button.dataset.role === 'toggle-participation') {
-        toggleParticipation(eventId);
-    }
-}
+// handleEventsGridClick removed - now handled by handleGlobalActions
 
 function handleMemberSearch(event) {
     state.memberSearchTerm = event.target.value.trim().toLowerCase();
@@ -1099,8 +1189,14 @@ function handlePreferenceToggle(event) {
     showToast(translate('labels.notifySuccess'), 'info');
 }
 
+
 function handleCreateEventSubmit(event) {
     event.preventDefault();
+    if (!state.currentUserId) {
+        showToast(translate('labels.loginRequired'), 'error');
+        return;
+    }
+
     const formData = new FormData(dom.createEventForm);
     const title = formData.get('title');
     const date = formData.get('date');
@@ -1119,50 +1215,42 @@ function handleCreateEventSubmit(event) {
     const price = priceRaw ? Number(priceRaw) : 0;
     const [cityCandidate, countryCandidate] = location.split(',').map((part) => part.trim());
     const ticketingUrl = (formData.get('ticketing') || '').trim();
+    const member = state.memberById.get(state.currentUserId);
 
-    const newEvent = {
-        id: generateId('evt'),
+    const newSuggestion = {
+        id: generateId('sug'),
         title,
         category,
         startsAt: `${date}T${time}`,
-        endsAt: `${date}T${time}`,
         location,
         city: cityCandidate || location,
         country: countryCandidate && countryCandidate.length === 2 ? countryCandidate.toUpperCase() : 'FR',
         price: Number.isFinite(price) ? price : 0,
         currency: 'EUR',
         description,
-        tags: [],
-        isExclusive: category === 'msc',
-        capacity: 150,
-        ticketing: [],
-        participants: [state.currentUserId]
+        link: ticketingUrl || '',
+        submittedBy: {
+            memberId: member?.id || state.currentUserId,
+            name: member?.name || (state.language === 'fr' ? 'Membre MSC' : 'MSC member')
+        },
+        submittedAt: new Date().toISOString(),
+        status: 'pending',
+        votes: 0,
+        notes: ''
     };
 
-    if (ticketingUrl) {
-        newEvent.ticketing.push({
-            name: newEvent.isExclusive ? 'MSC Direct' : (state.language === 'fr' ? 'Billetterie externe' : 'External ticketing'),
-            url: ticketingUrl,
-            price: newEvent.price,
-            currency: newEvent.currency,
-            available: true,
-            isInternal: newEvent.isExclusive
-        });
-    }
-
-    state.events.unshift(newEvent);
-    renderEvents();
-    renderDashboard();
+    state.suggestedEvents.unshift(newSuggestion);
+    renderMemberSuggestions();
     renderAdminStats();
     createNotification({
-        type: 'event',
-        title: state.language === 'fr' ? `Nouvel événement : ${title}` : `New event: ${title}`,
-        body: state.language === 'fr' ? `${title} ajouté au calendrier MSC.` : `${title} added to the MSC calendar.`,
+        type: 'community',
+        title: state.language === 'fr' ? 'Nouvelle suggestion de concert' : 'New concert suggestion',
+        body: state.language === 'fr' ? `${member?.name || 'Un membre'} propose ${title}.` : `${member?.name || 'A member'} suggested ${title}.`,
         read: false
     });
     dom.createEventForm.reset();
     closeModal('createEventModal');
-    showToast(translate('labels.eventCreated'), 'success');
+    showToast(translate('labels.suggestionSubmitted'), 'success');
 }
 
 function handleNewMessageSubmit(event) {
@@ -1235,6 +1323,7 @@ function handleNewTopicSubmit(event) {
 
 function handleEventsPageView() {
     renderEvents();
+    renderMemberSuggestions();
 }
 
 function handleMessagesPageView() {
@@ -1288,6 +1377,7 @@ function navigateTo(page) {
 function renderAll() {
     renderDashboard();
     renderEvents();
+    renderMemberSuggestions();
     renderMembers();
     renderConversationsList();
     renderForum();
@@ -1346,6 +1436,163 @@ function renderEvents() {
     }
 
     dom.eventsGrid.innerHTML = events.map(renderEventCard).join('');
+}
+
+
+function renderMemberSuggestions() {
+    if (!dom.suggestionsGrid) return;
+    const suggestions = state.suggestedEvents
+        .filter(filterSuggestionsByCategory)
+        .filter(filterSuggestionsBySearch)
+        .sort(sortSuggestions);
+
+    if (suggestions.length === 0) {
+        dom.suggestionsGrid.innerHTML = renderEmptyState(translate('labels.noSuggestions'));
+        return;
+    }
+
+    dom.suggestionsGrid.innerHTML = suggestions.map(renderSuggestionCard).join('');
+}
+
+function renderSuggestionCard(suggestion) {
+    const categoryLabel = translate(`categories.${suggestion.category || 'concert'}`) || suggestion.category;
+    const price = formatPrice(suggestion);
+    const submittedBy = suggestion.submittedBy?.name || (state.language === 'fr' ? 'Membre MSC' : 'MSC member');
+    const submittedAt = formatRelative(suggestion.submittedAt);
+    const votes = formatSuggestionVotes(suggestion.votes);
+    const statusBadge = renderSuggestionStatusBadge(suggestion.status);
+    const badgeLabel = state.language === 'fr' ? 'Communauté' : 'Community';
+
+    return `
+        <article class="card event-card suggestion-card" data-suggestion-id="${suggestion.id}">
+            <header class="event-card-header">
+                <div class="event-card-category">${categoryLabel}</div>
+                <span class="event-badge badge-suggestion">${badgeLabel}</span>
+            </header>
+            <h3 class="event-card-title">${suggestion.title}</h3>
+            <div class="event-card-meta">
+                <span>📅 ${formatDate(suggestion.startsAt)} • ${formatTime(suggestion.startsAt)}</span>
+                <span>📍 ${suggestion.location}</span>
+            </div>
+            <p class="event-card-description">${suggestion.description}</p>
+            <div class="suggestion-meta">
+                <span>👤 ${submittedBy}</span>
+                <span class="suggestion-status">${statusBadge} · ${submittedAt}</span>
+            </div>
+            <div class="event-card-info">
+                <span>${votes}</span>
+                <span>${price}</span>
+            </div>
+            <div class="suggestion-actions">
+                <button type="button" class="btn btn-secondary" data-role="open-suggestion" data-suggestion-id="${suggestion.id}">${translate('labels.seeDetails')}</button>
+                <button type="button" class="btn btn-primary" data-role="share-suggestion" data-suggestion-id="${suggestion.id}">${translate('labels.share')}</button>
+            </div>
+        </article>
+    `;
+}
+
+function renderSuggestionDetails(suggestion) {
+    const statusBadge = renderSuggestionStatusBadge(suggestion.status);
+    const submittedBy = suggestion.submittedBy?.name || (state.language === 'fr' ? 'Membre MSC' : 'MSC member');
+    const submittedAt = formatRelative(suggestion.submittedAt);
+    const votes = formatSuggestionVotes(suggestion.votes);
+    const price = formatPrice(suggestion);
+    const linkButton = suggestion.link
+        ? `<button type="button" class="btn btn-primary" data-platform-url="${suggestion.link}">${state.language === 'fr' ? 'Ouvrir la billetterie' : 'Open ticketing'}</button>`
+        : '';
+    const notes = suggestion.notes
+        ? `<p style="color: var(--text-secondary); margin-top: 12px;">${suggestion.notes}</p>`
+        : '';
+
+    return `
+        <div class="event-detail">
+            <header class="event-detail-header">
+                <h3>${suggestion.title}</h3>
+                <div class="event-detail-meta">
+                    <span>${statusBadge}</span>
+                    <span>📅 ${formatDate(suggestion.startsAt)} • ${formatTime(suggestion.startsAt)}</span>
+                    <span>📍 ${suggestion.location}</span>
+                    <span>💶 ${price}</span>
+                </div>
+            </header>
+            <p class="event-detail-description">${suggestion.description}</p>
+            <section class="event-detail-section">
+                <h4>${state.language === 'fr' ? 'Proposé par' : 'Suggested by'}</h4>
+                <p>${submittedBy} · ${submittedAt}</p>
+            </section>
+            <section class="event-detail-section">
+                <h4>${state.language === 'fr' ? 'Intérêt' : 'Interest'}</h4>
+                <p>${votes}</p>
+            </section>
+            ${notes}
+            <footer class="event-detail-footer">
+                ${linkButton}
+                <button type="button" class="btn btn-secondary" data-role="share-suggestion" data-suggestion-id="${suggestion.id}">${translate('labels.share')}</button>
+            </footer>
+        </div>
+    `;
+}
+
+function openSuggestionModal(id) {
+    const suggestion = state.suggestedEvents.find((item) => item.id === id);
+    if (!suggestion) return;
+    dom.eventModalContent.innerHTML = renderSuggestionDetails(suggestion);
+    dom.eventModalContent.dataset.context = 'suggestion';
+    dom.eventModalContent.dataset.suggestionId = suggestion.id;
+    openModal('eventModal');
+}
+
+function shareSuggestion(id) {
+    const suggestion = state.suggestedEvents.find((item) => item.id === id);
+    if (!suggestion) return;
+    suggestion.votes = (suggestion.votes || 0) + 1;
+    renderMemberSuggestions();
+    if (dom.eventModalContent.dataset.context === 'suggestion' && dom.eventModalContent.dataset.suggestionId === suggestion.id) {
+        dom.eventModalContent.innerHTML = renderSuggestionDetails(suggestion);
+    }
+    showToast(translate('labels.suggestionShared'), 'success');
+}
+
+function filterSuggestionsByCategory(suggestion) {
+    if (state.currentEventFilter === 'all') return true;
+    return suggestion.category === state.currentEventFilter;
+}
+
+function filterSuggestionsBySearch(suggestion) {
+    if (!state.eventSearchTerm) return true;
+    const term = state.eventSearchTerm;
+    return (
+        suggestion.title.toLowerCase().includes(term) ||
+        (suggestion.description || '').toLowerCase().includes(term) ||
+        suggestion.location.toLowerCase().includes(term)
+    );
+}
+
+function sortSuggestions(a, b) {
+    const order = { pending: 0, approved: 1, rejected: 2 };
+    const statusDiff = (order[a.status] ?? 3) - (order[b.status] ?? 3);
+    if (statusDiff !== 0) return statusDiff;
+    return new Date(a.startsAt) - new Date(b.startsAt);
+}
+
+function renderSuggestionStatusBadge(status) {
+    switch (status) {
+        case 'approved':
+            return `<span class="badge-approved">${translate('labels.suggestionStatusApproved')}</span>`;
+        case 'rejected':
+            return `<span class="badge-rejected">${translate('labels.suggestionStatusRejected')}</span>`;
+        case 'pending':
+        default:
+            return `<span class="badge-pending">${translate('labels.suggestionStatusPending')}</span>`;
+    }
+}
+
+function formatSuggestionVotes(votes) {
+    const total = votes || 0;
+    if (state.language === 'fr') {
+        return `${total} soutien${total > 1 ? 's' : ''}`;
+    }
+    return `${total} support${total !== 1 ? 's' : ''}`;
 }
 
 function renderMembers() {
@@ -1464,6 +1711,8 @@ function openEventModal(eventId) {
     const event = state.events.find((item) => item.id === eventId);
     if (!event) return;
     dom.eventModalContent.innerHTML = renderEventDetails(event);
+    dom.eventModalContent.dataset.context = 'event';
+    delete dom.eventModalContent.dataset.suggestionId;
     openModal('eventModal');
 }
 
@@ -1494,12 +1743,15 @@ function toggleParticipation(eventId) {
     const index = event.participants.indexOf(state.currentUserId);
     if (index >= 0) {
         event.participants.splice(index, 1);
-        showToast('Participation annulée.', 'info');
+        const message = state.language === 'fr' ? 'Participation annulée.' : 'RSVP cancelled.';
+        showToast(message, 'info');
     } else {
         event.participants.push(state.currentUserId);
-        showToast('Participation enregistrée.', 'success');
+        const message = state.language === 'fr' ? 'Participation enregistrée.' : 'RSVP saved.';
+        showToast(message, 'success');
     }
     renderEvents();
+    renderMemberSuggestions();
     renderDashboard();
 }
 
@@ -1527,6 +1779,8 @@ function applyLanguage() {
 
     dom.eventSearch.placeholder = translate('labels.searchEvents');
     dom.memberSearch.placeholder = translate('labels.searchMembers');
+    if (dom.suggestionsTitle) dom.suggestionsTitle.textContent = translate('labels.memberSuggestionsTitle');
+    if (dom.suggestionsSubtitle) dom.suggestionsSubtitle.textContent = translate('labels.memberSuggestionsSubtitle');
     document.querySelectorAll('[data-action="open-create-event"]').forEach((button) => {
         button.textContent = translate('labels.proposeEvent');
     });
@@ -1858,6 +2112,10 @@ function computeAdminStats() {
             value: state.events.length
         },
         {
+            label: state.language === 'fr' ? 'Suggestions en attente' : 'Pending suggestions',
+            value: state.suggestedEvents.filter((suggestion) => suggestion.status === 'pending').length
+        },
+        {
             label: state.language === 'fr' ? 'Messages forum' : 'Forum messages',
             value: state.forumTopics.reduce((total, topic) => total + topic.replies, 0)
         },
@@ -1910,6 +2168,10 @@ function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.remove('active');
+    if (id === 'eventModal') {
+        delete dom.eventModalContent.dataset.context;
+        delete dom.eventModalContent.dataset.suggestionId;
+    }
     if (!document.querySelector('.modal.active')) {
         dom.body.classList.remove('modal-open');
     }

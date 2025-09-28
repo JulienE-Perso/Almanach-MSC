@@ -561,6 +561,82 @@ header {
     color: #fff;
 }
 
+/* Suggestions */
+.events-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.events-actions .btn {
+    width: 100%;
+    max-width: 260px;
+}
+
+.suggestions-section {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.suggestions-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.suggestions-title {
+    font-size: 24px;
+    color: var(--text-primary);
+}
+
+.suggestions-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.suggestion-card {
+    position: relative;
+}
+
+.suggestion-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.suggestion-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.badge-pending {
+    background: rgba(250, 204, 21, 0.2);
+    color: #facc15;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.badge-approved {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.suggestion-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 /* Event cards */
 .event-card {
     display: flex;
@@ -600,6 +676,16 @@ header {
 .badge-new {
     background: rgba(59, 130, 246, 0.15);
     color: #60a5fa;
+}
+
+.badge-suggestion {
+    background: rgba(250, 204, 21, 0.18);
+    color: #facc15;
+}
+
+.badge-rejected {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
 }
 
 .event-card-title {
@@ -1296,6 +1382,14 @@ th {
     .ticketing-platform {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .events-actions {
+        justify-content: stretch;
+    }
+
+    .events-actions .btn {
+        max-width: none;
     }
 
     .header-content {

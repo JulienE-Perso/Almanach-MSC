@@ -128,9 +128,19 @@
                     <!-- Events will be loaded here -->
                 </div>
 
-                <button class="btn btn-primary" style="margin-top: 30px;" data-action="open-create-event">
-                    + Proposer un événement
-                </button>
+                <div class="events-actions">
+                    <button class="btn btn-primary" data-action="open-create-event" id="suggestEventButton">
+                        + Proposer un événement
+                    </button>
+                </div>
+
+                <div class="suggestions-section">
+                    <div class="suggestions-header">
+                        <h3 class="suggestions-title" id="suggestionsTitle">🎁 Suggestions des membres</h3>
+                        <p class="suggestions-subtitle" id="suggestionsSubtitle">Concerts proposés par la communauté MSC</p>
+                    </div>
+                    <div class="grid-3" id="suggestionsGrid"></div>
+                </div>
             </div>
 
             <!-- Messages Page -->
