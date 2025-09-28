@@ -966,7 +966,7 @@
                 </div>
 
                 <div class="event-filters">
-                    <input type="text" class="form-input" placeholder="🔍 Rechercher un événement..." id="eventSearch">
+                    <input type="text" class="form-input" placeholder="🔍 Rechercher un événement..." id="eventSearch" onkeyup="searchEvents()">
                     <div class="filter-buttons">
                         <button class="filter-btn active" onclick="filterEvents('all')">Tous</button>
                         <button class="filter-btn" onclick="filterEvents('concert')">🎸 Concerts</button>
@@ -1467,6 +1467,8 @@
         // State
         let currentUser = null;
         let currentPage = 'dashboard';
+        let currentEventFilter = 'all';
+        let currentEventSearch = '';
 
         // Functions
         function handleLogin(event) {
@@ -1511,7 +1513,36 @@
             const grid = document.getElementById('eventsGrid');
             if(!grid) return;
             
-            grid.innerHTML = events.map(event => `
+            // Filter events based on current filter and search
+            let filteredEvents = events;
+            
+            // Apply category filter
+            if (currentEventFilter !== 'all') {
+                filteredEvents = filteredEvents.filter(event => event.category === currentEventFilter);
+            }
+            
+            // Apply search filter
+            if (currentEventSearch.trim()) {
+                const searchTerm = currentEventSearch.toLowerCase();
+                filteredEvents = filteredEvents.filter(event => 
+                    event.title.toLowerCase().includes(searchTerm) ||
+                    event.description.toLowerCase().includes(searchTerm) ||
+                    event.location.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Show message if no events found
+            if (filteredEvents.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>Aucun événement trouvé pour cette recherche</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filteredEvents.map(event => `
                 <div class="card" onclick="showEventDetails(${event.id})">
                     ${event.isMSC ? '<span class="event-badge badge-msc">⭐ SESSION MSC</span>' : ''}
                     <h3 style="color: var(--text-primary); margin-bottom: 15px;">${event.title}</h3>
@@ -1618,9 +1649,20 @@
         }
 
         function filterEvents(category) {
+            // Update active filter button
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            // Filter logic here
+            
+            // Update current filter
+            currentEventFilter = category;
+            
+            // Reload events with new filter
+            loadEvents();
+        }
+
+        function searchEvents() {
+            const searchInput = document.getElementById('eventSearch');
+            currentEventSearch = searchInput.value;
             loadEvents();
         }
 
