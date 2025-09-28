@@ -402,6 +402,142 @@
             color: white;
         }
 
+        /* Ticketing Styles */
+        .ticketing-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .ticketing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ticketing-title {
+            color: var(--primary-red);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .ticketing-status {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .ticketing-status.available {
+            background: #10b981;
+            color: white;
+        }
+
+        .ticketing-status.soldout {
+            background: #ef4444;
+            color: white;
+        }
+
+        .ticketing-platforms {
+            display: grid;
+            gap: 10px;
+        }
+
+        .ticketing-platform {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(31, 41, 55, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .ticketing-platform:hover {
+            background: rgba(31, 41, 55, 0.5);
+            border-color: var(--primary-red);
+        }
+
+        .ticketing-platform.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .platform-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .platform-name {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .platform-price {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+
+        .platform-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .platform-badge.internal {
+            background: rgba(220, 38, 38, 0.2);
+            color: var(--primary-red);
+        }
+
+        .platform-badge.free {
+            background: #10b981;
+            color: white;
+        }
+
+        .platform-badge.unavailable {
+            background: #6b7280;
+            color: white;
+        }
+
+        .platform-button {
+            padding: 8px 16px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .platform-button:hover {
+            background: var(--dark-red);
+            transform: translateY(-1px);
+        }
+
+        .platform-button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ticketing-note {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(220, 38, 38, 0.1);
+            border-left: 3px solid var(--primary-red);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
         /* Messages */
         .messages-container {
             display: grid;
@@ -1389,7 +1525,16 @@
                 price: "45€",
                 category: "concert",
                 description: "Une soirée metal progressive exceptionnelle",
-                attendees: 24
+                attendees: 24,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "Fnac Spectacles", url: "https://www.fnacspectacles.com", price: "45€", available: true },
+                        { name: "Ticketmaster", url: "https://www.ticketmaster.fr", price: "45€", available: true },
+                        { name: "Zénith Paris", url: "https://www.zenith-paris.com", price: "45€", available: true }
+                    ],
+                    soldOut: false
+                }
             },
             {
                 id: 2,
@@ -1401,7 +1546,15 @@
                 category: "msc",
                 description: "Soirée exclusive avec 3 groupes locaux",
                 attendees: 18,
-                isMSC: true
+                isMSC: true,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "MSC Direct", url: "#", price: "15€", available: true, isInternal: true },
+                        { name: "Le Klub", url: "https://www.leklub.fr", price: "15€", available: true }
+                    ],
+                    soldOut: false
+                }
             },
             {
                 id: 3,
@@ -1412,7 +1565,16 @@
                 price: "250€",
                 category: "festival",
                 description: "Le plus grand festival metal de France",
-                attendees: 42
+                attendees: 42,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "Hellfest Store", url: "https://www.hellfest.fr", price: "250€", available: true },
+                        { name: "Fnac Spectacles", url: "https://www.fnacspectacles.com", price: "250€", available: true },
+                        { name: "Ticketmaster", url: "https://www.ticketmaster.fr", price: "250€", available: false }
+                    ],
+                    soldOut: false
+                }
             },
             {
                 id: 4,
@@ -1423,7 +1585,16 @@
                 price: "85€",
                 category: "concert",
                 description: "Le retour des légendes",
-                attendees: 67
+                attendees: 67,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "Ticketmaster", url: "https://www.ticketmaster.fr", price: "85€", available: true },
+                        { name: "Fnac Spectacles", url: "https://www.fnacspectacles.com", price: "85€", available: true },
+                        { name: "Stade de France", url: "https://www.stadefrance.com", price: "85€", available: true }
+                    ],
+                    soldOut: false
+                }
             },
             {
                 id: 5,
@@ -1434,7 +1605,14 @@
                 price: "Gratuit",
                 category: "conference",
                 description: "Histoire du black metal norvégien",
-                attendees: 12
+                attendees: 12,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "BNF Réservation", url: "https://www.bnf.fr", price: "Gratuit", available: true, isFree: true }
+                    ],
+                    soldOut: false
+                }
             },
             {
                 id: 6,
@@ -1445,7 +1623,57 @@
                 price: "12€",
                 category: "expo",
                 description: "L'influence du metal dans l'art",
-                attendees: 8
+                attendees: 8,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "Centre Pompidou", url: "https://www.centrepompidou.fr", price: "12€", available: true },
+                        { name: "Fnac Spectacles", url: "https://www.fnacspectacles.com", price: "12€", available: true }
+                    ],
+                    soldOut: false
+                }
+            },
+            {
+                id: 7,
+                title: "Metallica - World Tour 2025",
+                date: "25/05/2025",
+                time: "19:30",
+                location: "Stade de France",
+                price: "120€",
+                category: "concert",
+                description: "Les légendes du thrash metal en concert",
+                attendees: 89,
+                ticketing: {
+                    available: true,
+                    platforms: [
+                        { name: "Ticketmaster", url: "https://www.ticketmaster.fr", price: "120€", available: true },
+                        { name: "Fnac Spectacles", url: "https://www.fnacspectacles.com", price: "120€", available: false },
+                        { name: "Live Nation", url: "https://www.livenation.fr", price: "120€", available: true }
+                    ],
+                    soldOut: false,
+                    note: "⚠️ Billets en vente limitée - Achat rapide recommandé"
+                }
+            },
+            {
+                id: 8,
+                title: "Session MSC #13 - Sold Out",
+                date: "28/02/2025",
+                time: "20:00",
+                location: "Le Klub",
+                price: "15€",
+                category: "msc",
+                description: "Soirée exclusive - COMPLET",
+                attendees: 50,
+                isMSC: true,
+                ticketing: {
+                    available: false,
+                    platforms: [
+                        { name: "MSC Direct", url: "#", price: "15€", available: false, isInternal: true },
+                        { name: "Le Klub", url: "https://www.leklub.fr", price: "15€", available: false }
+                    ],
+                    soldOut: true,
+                    note: "🎫 Événement complet - Liste d'attente disponible"
+                }
             }
         ];
 
@@ -1555,8 +1783,37 @@
                         <div>💶 ${event.price}</div>
                         <div>👥 ${event.attendees} participants</div>
                     </div>
+                    
+                    ${event.ticketing ? `
+                        <div class="ticketing-section">
+                            <div class="ticketing-header">
+                                <div class="ticketing-title">🎫 Billeterie</div>
+                                <div class="ticketing-status ${event.ticketing.soldOut ? 'soldout' : 'available'}">
+                                    ${event.ticketing.soldOut ? 'Complet' : 'Disponible'}
+                                </div>
+                            </div>
+                            <div class="ticketing-platforms">
+                                ${event.ticketing.platforms.map(platform => `
+                                    <div class="ticketing-platform ${!platform.available ? 'unavailable' : ''}" onclick="event.stopPropagation(); ${platform.available ? `openTicketing('${platform.url}', '${platform.name}')` : ''}">
+                                        <div class="platform-info">
+                                            <div class="platform-name">${platform.name}</div>
+                                            <div class="platform-price">${platform.price}</div>
+                                            ${platform.isInternal ? '<span class="platform-badge internal">MSC</span>' : ''}
+                                            ${platform.isFree ? '<span class="platform-badge free">GRATUIT</span>' : ''}
+                                            ${!platform.available ? '<span class="platform-badge unavailable">Indisponible</span>' : ''}
+                                        </div>
+                                        <button class="platform-button" ${!platform.available ? 'disabled' : ''}>
+                                            ${platform.available ? 'Acheter' : 'Indisponible'}
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${event.ticketing.note ? `<div class="ticketing-note">${event.ticketing.note}</div>` : ''}
+                        </div>
+                    ` : ''}
+                    
                     <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
-                        Participer
+                        Voir détails
                     </button>
                 </div>
             `).join('');
@@ -1639,13 +1896,56 @@
                             <div>👥 <strong>Participants :</strong> ${event.attendees} membres MSC</div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 15px;">
+                    
+                    ${event.ticketing ? `
+                        <div class="ticketing-section">
+                            <div class="ticketing-header">
+                                <div class="ticketing-title">🎫 Billeterie</div>
+                                <div class="ticketing-status ${event.ticketing.soldOut ? 'soldout' : 'available'}">
+                                    ${event.ticketing.soldOut ? 'Complet' : 'Disponible'}
+                                </div>
+                            </div>
+                            <div class="ticketing-platforms">
+                                ${event.ticketing.platforms.map(platform => `
+                                    <div class="ticketing-platform ${!platform.available ? 'unavailable' : ''}" onclick="${platform.available ? `openTicketing('${platform.url}', '${platform.name}')` : ''}">
+                                        <div class="platform-info">
+                                            <div class="platform-name">${platform.name}</div>
+                                            <div class="platform-price">${platform.price}</div>
+                                            ${platform.isInternal ? '<span class="platform-badge internal">MSC</span>' : ''}
+                                            ${platform.isFree ? '<span class="platform-badge free">GRATUIT</span>' : ''}
+                                            ${!platform.available ? '<span class="platform-badge unavailable">Indisponible</span>' : ''}
+                                        </div>
+                                        <button class="platform-button" ${!platform.available ? 'disabled' : ''}>
+                                            ${platform.available ? 'Acheter' : 'Indisponible'}
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${event.ticketing.note ? `<div class="ticketing-note">${event.ticketing.note}</div>` : ''}
+                        </div>
+                    ` : ''}
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
                         <button class="btn btn-primary" style="flex: 1;">Je participe !</button>
                         <button class="btn btn-secondary" style="flex: 1;">Partager</button>
                     </div>
                 </div>
             `;
             document.getElementById('eventModal').classList.add('active');
+        }
+
+        function openTicketing(url, platformName) {
+            if (url === '#') {
+                // Pour les événements MSC internes
+                alert(`Réservation MSC pour ${platformName} - Fonctionnalité à venir !`);
+                return;
+            }
+            
+            // Ouvrir la billeterie dans un nouvel onglet
+            window.open(url, '_blank');
+            
+            // Optionnel : tracker l'ouverture de billeterie
+            console.log(`Ouverture billeterie: ${platformName} - ${url}`);
         }
 
         function filterEvents(category) {
