@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALMANACH MSC - Détail événement</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="event-detail-page">
+    <div class="event-detail-container">
+        <header class="event-detail-topbar">
+            <div class="topbar-left">
+                <button type="button" class="btn btn-secondary" id="backButton">←</button>
+                <div id="eventTitle" class="event-detail-heading"></div>
+            </div>
+            <div class="topbar-actions">
+                <button type="button" class="language-toggle" id="detailLanguageToggle" data-lang="fr">FR</button>
+            </div>
+        </header>
+        <main class="event-detail-main">
+            <section class="card" id="eventOverview"></section>
+            <section class="card" id="eventDiscussionSection"></section>
+        </main>
+    </div>
+
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/event-detail.js"></script>
+</body>
+</html>
