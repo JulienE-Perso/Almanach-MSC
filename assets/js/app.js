@@ -93,7 +93,7 @@ const seedData = {
             name: 'Inès Moreau',
             email: 'ines.moreau@msc.fr',
             role: 'Coordinatrice Communauté',
-            bio: 'Anime le forum et les activités réseaux sociaux du MSC.',
+            bio: 'Anime les échanges de la communauté et les activités réseaux sociaux du MSC.',
             location: 'Toulouse, FR',
             genres: ['Post Metal', 'Sludge'],
             instruments: ['Basse'],
@@ -380,59 +380,51 @@ const seedData = {
         },
         {
             id: 'not-004',
-            type: 'forum',
-            title: 'Nouvelle réponse : Top albums 2024',
-            body: 'Diane a répondu à la discussion Top albums Metal 2024.',
+            type: 'discussion',
+            title: 'Nouvelle réponse : Gojira + Knocked Loose',
+            body: 'Diane a relancé la discussion de covoiturage pour Gojira.',
             createdAt: '2025-02-09T09:05:00',
             read: false
         }
     ],
-    forumTopics: [
-        {
-            id: 'topic-001',
-            title: 'Top albums Metal 2024',
-            authorId: 'mem-alice',
-            category: 'discussion',
-            replies: 42,
-            views: 780,
-            lastActivity: '2025-02-10T11:00:00',
-            tags: ['Releases', '2024'],
-            status: 'active'
-        },
-        {
-            id: 'topic-002',
-            title: 'Recherche guitariste pour projet Death Prog',
-            authorId: 'mem-bob',
-            category: 'annonces',
-            replies: 8,
-            views: 156,
-            lastActivity: '2025-02-09T17:45:00',
-            tags: ['Collab', 'Musiciens'],
-            status: 'open'
-        },
-        {
-            id: 'topic-003',
-            title: 'Hellfest 2025 - organisation covoiturage',
-            authorId: 'mem-charlie',
-            category: 'evenements',
-            replies: 23,
-            views: 342,
-            lastActivity: '2025-02-08T20:30:00',
-            tags: ['Festival', 'Logistique'],
-            status: 'active'
-        },
-        {
-            id: 'topic-004',
-            title: 'Vinyles incontournables Black Metal',
-            authorId: 'mem-diane',
-            category: 'discussion',
-            replies: 15,
-            views: 205,
-            lastActivity: '2025-02-07T22:10:00',
-            tags: ['Collection', 'Black Metal'],
-            status: 'active'
-        }
-    ],
+    eventDiscussions: {
+        'evt-gojira': [
+            {
+                id: 'ed-gojira-001',
+                authorId: 'mem-diane',
+                content: 'Je pars de République à 18h pour covoiturer. Il me reste 2 places.',
+                createdAt: '2025-02-10T10:45:00'
+            },
+            {
+                id: 'ed-gojira-002',
+                authorId: 'mem-bob',
+                content: 'Intéressé ! Je peux amener des bouchons d’oreille pour tout le monde.',
+                createdAt: '2025-02-10T11:05:00'
+            }
+        ],
+        'evt-session12': [
+            {
+                id: 'ed-session12-001',
+                authorId: 'mem-alice',
+                content: 'On prévoit un after à partir de 1h au bar du Klub, venez tôt !',
+                createdAt: '2025-02-09T21:20:00'
+            },
+            {
+                id: 'ed-session12-002',
+                authorId: 'mem-frank',
+                content: 'Besoin d’un coup de main pour installer la captation vidéo à 18h.',
+                createdAt: '2025-02-09T22:15:00'
+            }
+        ],
+        'evt-hellfest': [
+            {
+                id: 'ed-hellfest-001',
+                authorId: 'mem-ines',
+                content: 'On a un camping MSC réservé, envoyez-moi un message pour réserver votre place.',
+                createdAt: '2025-02-08T17:50:00'
+            }
+        ]
+    },
     bands: {
         featured: [
             {
@@ -532,8 +524,7 @@ const translations = {
             events: '📅 Événements',
             messages: '💬 Messages',
             members: '👥 Membres',
-            bands: '🎵 Groupes',
-            forum: '💭 Forum'
+            bands: '🎵 Groupes'
         },
         headings: {
             dashboardTitle: '🏠 Tableau de bord',
@@ -544,7 +535,6 @@ const translations = {
             membersSubtitle: 'La communauté Metal Social Club',
             bandsTitle: '🎵 Groupes & Artistes',
             bandsSubtitle: 'Base de données des groupes Metal',
-            forumTitle: '💭 Forum',
             notificationsTitle: '🔔 Notifications',
             notificationsSubtitle: 'Restez informé de l’activité du MSC',
             profileTitle: '⚙️ Mon Profil',
@@ -556,7 +546,6 @@ const translations = {
             searchMembers: '🔍 Rechercher un membre...',
             searchEvents: '🔍 Rechercher un événement...',
             proposeEvent: '+ Proposer un événement',
-            newTopic: '+ Nouveau sujet',
             newMessage: '+ Nouveau message',
             send: 'Envoyer',
             participate: 'Je participe',
@@ -580,7 +569,6 @@ const translations = {
             profileSaved: 'Profil sauvegardé',
             registerSuccess: 'Demande envoyée ! Un administrateur validera votre compte.',
             messageSent: 'Message envoyé',
-            topicCreated: 'Sujet publié',
             eventCreated: 'Événement ajouté au planning',
             forgotPassword: 'Un email de réinitialisation vient d’être envoyé.',
             memberSuggestionsTitle: '🎁 Suggestions des membres',
@@ -591,7 +579,13 @@ const translations = {
             suggestionSubmitted: 'Suggestions envoyée à l’équipe MSC',
             suggestionShared: 'Suggestion partagée aux membres intéressés',
             noSuggestions: 'Aucune suggestion pour le moment. Proposez un concert !',
-            loginRequired: 'Veuillez vous connecter pour proposer un concert.'
+            loginRequired: 'Veuillez vous connecter pour proposer un concert.',
+            eventDiscussionHeading: 'Discussion de l’événement',
+            eventDiscussionEmpty: 'Pas encore de message. Lancez la discussion !',
+            eventDiscussionPlaceholder: 'Partagez une info, proposez un covoiturage...',
+            eventDiscussionSubmit: 'Publier',
+            eventDiscussionPosted: 'Message publié',
+            dashboardEventDiscussionTitle: '💬 Discussions événements'
         },
         categories: {
             all: 'Tous',
@@ -600,12 +594,6 @@ const translations = {
             msc: '⭐ Sessions MSC',
             conference: '🎤 Conférences',
             expo: '🎨 Expositions'
-        },
-        forumCategories: {
-            discussion: 'Discussion',
-            annonces: 'Annonces',
-            evenements: 'Événements',
-            technique: 'Technique'
         },
         time: {
             today: 'Aujourd’hui',
@@ -618,8 +606,7 @@ const translations = {
             events: '📅 Events',
             messages: '💬 Messages',
             members: '👥 Members',
-            bands: '🎵 Artists',
-            forum: '💭 Forum'
+            bands: '🎵 Artists'
         },
         headings: {
             dashboardTitle: '🏠 Dashboard',
@@ -630,7 +617,6 @@ const translations = {
             membersSubtitle: 'Meet the Metal Social Club community',
             bandsTitle: '🎵 Artists & Bands',
             bandsSubtitle: 'Curated database of metal acts',
-            forumTitle: '💭 Forum',
             notificationsTitle: '🔔 Notifications',
             notificationsSubtitle: 'Stay on top of what is happening at MSC',
             profileTitle: '⚙️ My Profile',
@@ -642,7 +628,6 @@ const translations = {
             searchMembers: '🔍 Search members...',
             searchEvents: '🔍 Search events...',
             proposeEvent: '+ Submit an event',
-            newTopic: '+ New topic',
             newMessage: '+ New message',
             send: 'Send',
             participate: 'I’m going',
@@ -666,7 +651,6 @@ const translations = {
             profileSaved: 'Profile saved',
             registerSuccess: 'Request submitted! An admin will validate your account.',
             messageSent: 'Message sent',
-            topicCreated: 'Topic published',
             eventCreated: 'Event added to the calendar',
             forgotPassword: 'A reset email has just been sent.',
             memberSuggestionsTitle: '🎁 Member Suggestions',
@@ -677,7 +661,13 @@ const translations = {
             suggestionSubmitted: 'Suggestion sent to the MSC team',
             suggestionShared: 'Suggestion shared with interested members',
             noSuggestions: 'No suggestion yet. Share a concert with the crew!',
-            loginRequired: 'Please log in to submit a concert.'
+            loginRequired: 'Please log in to submit a concert.',
+            eventDiscussionHeading: 'Event discussion',
+            eventDiscussionEmpty: 'No message yet. Start the conversation!',
+            eventDiscussionPlaceholder: 'Share info, organize transport, ask questions...',
+            eventDiscussionSubmit: 'Post',
+            eventDiscussionPosted: 'Message posted',
+            dashboardEventDiscussionTitle: '💬 Event discussions'
         },
         categories: {
             all: 'All',
@@ -686,12 +676,6 @@ const translations = {
             msc: '⭐ MSC Sessions',
             conference: '🎤 Conferences',
             expo: '🎨 Exhibitions'
-        },
-        forumCategories: {
-            discussion: 'Discussion',
-            annonces: 'Classifieds',
-            evenements: 'Events',
-            technique: 'Technical'
         },
         time: {
             today: 'Today',
@@ -713,7 +697,7 @@ const state = {
     memberById: new Map(),
     conversations: [],
     notifications: [],
-    forumTopics: [],
+    eventDiscussions: new Map(),
     bands: seedData.bands,
     toasts: [],
     preferences: {
@@ -773,7 +757,12 @@ function hydrateState() {
         messages: conversation.messages.map((message) => ({ ...message, readBy: [...message.readBy] }))
     }));
     state.notifications = seedData.notifications.map((notification) => ({ ...notification }));
-    state.forumTopics = seedData.forumTopics.map((topic) => ({ ...topic }));
+    state.eventDiscussions = new Map(
+        Object.entries(seedData.eventDiscussions || {}).map(([eventId, messages]) => [
+            eventId,
+            messages.map((message) => ({ ...message }))
+        ])
+    );
 }
 
 function cacheDom() {
@@ -795,7 +784,7 @@ function cacheDom() {
     dom.dashboardSubtitle = document.getElementById('dashboardSubtitle');
     dom.dashboardUpcoming = document.getElementById('dashboardUpcoming');
     dom.dashboardMessages = document.getElementById('dashboardMessages');
-    dom.dashboardForum = document.getElementById('dashboardForum');
+    dom.dashboardEventDiscussions = document.getElementById('dashboardEventDiscussions');
     dom.eventSearch = document.getElementById('eventSearch');
     dom.eventFilters = document.querySelector('.filter-buttons');
     dom.eventsGrid = document.getElementById('eventsGrid');
@@ -812,7 +801,6 @@ function cacheDom() {
     dom.bandsTabs = document.querySelector('.tabs');
     dom.notificationList = document.getElementById('notificationList');
     dom.notificationBadge = document.getElementById('notificationBadge');
-    dom.forumTopicsBody = document.getElementById('forumTopicsBody');
     dom.profileName = document.getElementById('profileName');
     dom.profileEmail = document.getElementById('profileEmail');
     dom.profileBio = document.getElementById('profileBio');
@@ -826,7 +814,6 @@ function cacheDom() {
     dom.newMessageForm = document.getElementById('newMessageForm');
     dom.messageRecipient = document.getElementById('messageRecipient');
     dom.messageContent = document.getElementById('messageContent');
-    dom.newTopicForm = document.getElementById('newTopicForm');
     dom.eventModal = document.getElementById('eventModal');
     dom.eventModalContent = document.getElementById('eventModalContent');
     dom.userMenuModal = document.getElementById('userMenuModal');
@@ -863,8 +850,8 @@ function bindEvents() {
     document.querySelector('[data-pref="newsletter"]').addEventListener('click', handlePreferenceToggle);
     dom.createEventForm.addEventListener('submit', handleCreateEventSubmit);
     dom.newMessageForm.addEventListener('submit', handleNewMessageSubmit);
-    dom.newTopicForm.addEventListener('submit', handleNewTopicSubmit);
     document.body.addEventListener('click', handleGlobalActions);
+    document.addEventListener('submit', handleEventDiscussionSubmit);
 }
 
 function attachModalClosers() {
@@ -944,9 +931,6 @@ function handleGlobalActions(event) {
             case 'open-new-message':
                 openModal('newMessageModal');
                 break;
-            case 'open-new-topic':
-                openModal('newTopicModal');
-                break;
             case 'open-notifications':
                 navigateTo('notifications');
                 break;
@@ -1014,13 +998,6 @@ function handleLanguageToggle() {
 function handleLoginSubmit(event) {
     event.preventDefault();
     const identifier = dom.loginEmail.value.trim();
-    const password = dom.loginPassword.value.trim();
-
-    if (!identifier || !password) {
-        const loginMessage = state.language === 'fr' ? 'Veuillez remplir vos identifiants.' : 'Please enter your credentials.';
-        updateFeedback(dom.loginFeedback, loginMessage, 'error');
-        return;
-    }
 
     const identifierLower = identifier.toLowerCase();
     let member = state.members.find((m) => m.email.toLowerCase() === identifierLower);
@@ -1039,6 +1016,8 @@ function handleLoginSubmit(event) {
     state.preferences = { ...state.preferences, ...member.preferences };
     state.memberById.get(member.id).lastLogin = new Date().toISOString();
 
+    dom.loginFeedback.textContent = '';
+    dom.loginFeedback.className = 'form-feedback';
     dom.loginPage.style.display = 'none';
     dom.appContainer.classList.add('active');
     dom.body.classList.add('app-active');
@@ -1289,36 +1268,48 @@ function handleNewMessageSubmit(event) {
     showToast(translate('labels.messageSent'), 'success');
 }
 
-function handleNewTopicSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(dom.newTopicForm);
-    const title = (formData.get('title') || '').trim();
-    const category = formData.get('category');
-    const content = (formData.get('content') || '').trim();
+function handleEventDiscussionSubmit(event) {
+    const form = event.target.closest('form[data-role="event-discussion-form"]');
+    if (!form) return;
 
-    if (!title || !category || !content) {
-        const requiredMessage = state.language === 'fr' ? 'Merci de compléter tous les champs.' : 'Please complete every field.';
-        showToast(requiredMessage, 'error');
+    event.preventDefault();
+
+    if (!state.currentUserId) {
+        const message = state.language === 'fr'
+            ? 'Veuillez vous connecter pour participer aux discussions.'
+            : 'Please sign in to join the discussions.';
+        showToast(message, 'error');
         return;
     }
 
-    const newTopic = {
-        id: generateId('topic'),
-        title,
-        authorId: state.currentUserId,
-        category,
-        replies: 0,
-        views: 0,
-        lastActivity: new Date().toISOString(),
-        tags: [],
-        status: 'active'
-    };
+    const eventId = form.dataset.eventId;
+    if (!eventId) return;
 
-    state.forumTopics.unshift(newTopic);
-    dom.newTopicForm.reset();
-    closeModal('newTopicModal');
-    renderForum();
-    showToast(translate('labels.topicCreated'), 'success');
+    const textarea = form.querySelector('textarea[name="message"]');
+    const content = (textarea?.value || '').trim();
+    if (!content) {
+        const message = state.language === 'fr' ? 'Votre message est vide.' : 'Your message is empty.';
+        showToast(message, 'error');
+        return;
+    }
+
+    const existing = state.eventDiscussions.get(eventId) || [];
+    const messages = [...existing, {
+        id: generateId('ed'),
+        authorId: state.currentUserId,
+        content,
+        createdAt: new Date().toISOString()
+    }];
+    state.eventDiscussions.set(eventId, messages);
+
+    if (textarea) {
+        textarea.value = '';
+    }
+
+    updateEventDiscussionFeed(eventId);
+    renderDashboardEventDiscussions();
+    renderAdminStats();
+    showToast(translate('labels.eventDiscussionPosted'), 'success');
 }
 
 function handleEventsPageView() {
@@ -1355,10 +1346,6 @@ function navigateTo(page) {
         renderMembers();
     }
 
-    if (page === 'forum') {
-        renderForum();
-    }
-
     if (page === 'notifications') {
         renderNotifications();
     }
@@ -1380,7 +1367,6 @@ function renderAll() {
     renderMemberSuggestions();
     renderMembers();
     renderConversationsList();
-    renderForum();
     renderNotifications();
     renderProfile();
     renderAdminStats();
@@ -1420,8 +1406,7 @@ function renderDashboard() {
     const noMessages = state.language === 'fr' ? 'Aucun message récent.' : 'No recent messages.';
     dom.dashboardMessages.innerHTML = recentMessages.map(renderDashboardMessage).join('') || renderEmptyState(noMessages);
 
-    const activeTopics = state.forumTopics.slice(0, 3);
-    dom.dashboardForum.innerHTML = activeTopics.map(renderDashboardTopic).join('');
+    renderDashboardEventDiscussions();
 }
 
 function renderEvents() {
@@ -1660,13 +1645,6 @@ function renderBandCards(tabId) {
     container.innerHTML = bands.map(renderBandCard).join('');
 }
 
-function renderForum() {
-    dom.forumTopicsBody.innerHTML = state.forumTopics
-        .sort((a, b) => new Date(b.lastActivity) - new Date(a.lastActivity))
-        .map(renderForumRow)
-        .join('');
-}
-
 function renderNotifications() {
     dom.notificationList.innerHTML = state.notifications
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -1769,7 +1747,6 @@ function applyLanguage() {
     document.querySelector('#membersPage .page-subtitle').textContent = headings.membersSubtitle;
     document.querySelector('#bandsPage .page-title').textContent = headings.bandsTitle;
     document.querySelector('#bandsPage .page-subtitle').textContent = headings.bandsSubtitle;
-    document.querySelector('#forumPage .page-title').textContent = headings.forumTitle;
     document.querySelector('#notificationsPage .page-title').textContent = headings.notificationsTitle;
     document.querySelector('#notificationsPage .page-subtitle').textContent = headings.notificationsSubtitle;
     document.querySelector('#profilePage .page-title').textContent = headings.profileTitle;
@@ -1784,8 +1761,8 @@ function applyLanguage() {
     document.querySelectorAll('[data-action="open-create-event"]').forEach((button) => {
         button.textContent = translate('labels.proposeEvent');
     });
-    const newTopicBtn = document.querySelector('#forumPage [data-action="open-new-topic"]');
-    if (newTopicBtn) newTopicBtn.textContent = translate('labels.newTopic');
+    const dashboardDiscussionTitle = document.getElementById('dashboardEventDiscussionTitle');
+    if (dashboardDiscussionTitle) dashboardDiscussionTitle.textContent = translate('labels.dashboardEventDiscussionTitle');
     dom.chatSendButton.textContent = translate('labels.send');
     const newMessageBtn = document.querySelector('[data-action="open-new-message"]');
     if (newMessageBtn) newMessageBtn.textContent = translate('labels.newMessage');
@@ -1846,18 +1823,27 @@ function renderDashboardMessage(message) {
     `;
 }
 
-function renderDashboardTopic(topic) {
-    const author = state.memberById.get(topic.authorId)?.name || 'MSC Member';
-    const badgeClass = topic.category === 'annonces' || topic.category === 'msc' ? 'badge-msc' : 'badge-new';
+function renderDashboardEventDiscussionItem(entry) {
     return `
-        <div class="dashboard-topic">
-            <div class="dashboard-topic-info">
-                <span class="dashboard-topic-title">${topic.title}</span>
-                <span class="dashboard-topic-meta">${topic.replies} repl. • ${formatRelative(topic.lastActivity)}</span>
+        <div class="dashboard-discussion">
+            <div class="dashboard-discussion-head">
+                <span class="dashboard-discussion-title">${entry.eventTitle}</span>
+                <span class="dashboard-discussion-time">${formatRelative(entry.createdAt)}</span>
             </div>
-            <span class="event-badge ${badgeClass}">${translate(`forumCategories.${topic.category}`)}</span>
+            <div class="dashboard-discussion-meta">${entry.author}</div>
+            <p class="dashboard-discussion-body">${entry.content}</p>
         </div>
     `;
+}
+
+function renderDashboardEventDiscussions(limit = 3) {
+    if (!dom.dashboardEventDiscussions) return;
+    const discussions = getRecentEventDiscussionMessages(limit);
+    if (discussions.length === 0) {
+        dom.dashboardEventDiscussions.innerHTML = renderEmptyState(translate('labels.eventDiscussionEmpty'));
+        return;
+    }
+    dom.dashboardEventDiscussions.innerHTML = discussions.map(renderDashboardEventDiscussionItem).join('');
 }
 
 function renderEventCard(event) {
@@ -1916,6 +1902,7 @@ function renderEventDetails(event) {
     const participationButton = event.participants.includes(state.currentUserId)
         ? `<button type="button" class="btn btn-secondary" data-event-id="${event.id}" data-role="toggle-participation">${translate('labels.cancelParticipation')}</button>`
         : `<button type="button" class="btn btn-primary" data-event-id="${event.id}" data-role="toggle-participation">${translate('labels.participate')}</button>`;
+    const discussionSection = renderEventDiscussionSection(event);
 
     const ticketing = event.ticketing
         .map((platform) => {
@@ -1949,12 +1936,84 @@ function renderEventDetails(event) {
                 <p>${memberNames || (state.language === 'fr' ? 'Soyez le premier à participer.' : 'Be the first to join.')}</p>
             </section>
             ${event.ticketing.length ? `<section class="event-detail-section"><h4>${translate('labels.ticketing')}</h4>${ticketing}</section>` : ''}
+            ${discussionSection}
             <footer class="event-detail-footer">
                 ${participationButton}
                 <button type="button" class="btn btn-secondary">${translate('labels.share')}</button>
             </footer>
         </div>
     `;
+}
+
+function renderEventDiscussionSection(event) {
+    const messages = state.eventDiscussions.get(event.id) || [];
+    const countLabel = formatEventDiscussionCount(messages.length);
+    return `
+        <section class="event-detail-section event-discussion-section">
+            <div class="event-discussion-header">
+                <h4>${translate('labels.eventDiscussionHeading')}</h4>
+                <span class="event-discussion-count" data-event-discussion-count="${event.id}">${countLabel}</span>
+            </div>
+            <div class="event-discussion-feed" id="eventDiscussionFeed-${event.id}">
+                ${renderEventDiscussionMessages(event.id)}
+            </div>
+            <form class="event-discussion-form" data-role="event-discussion-form" data-event-id="${event.id}">
+                <textarea class="form-textarea" name="message" rows="3" placeholder="${translate('labels.eventDiscussionPlaceholder')}" required></textarea>
+                <button type="submit" class="btn btn-primary">${translate('labels.eventDiscussionSubmit')}</button>
+            </form>
+        </section>
+    `;
+}
+
+function renderEventDiscussionMessages(eventId) {
+    const messages = state.eventDiscussions.get(eventId) || [];
+    if (messages.length === 0) {
+        return `<div class="event-discussion-empty">${translate('labels.eventDiscussionEmpty')}</div>`;
+    }
+    return messages
+        .slice()
+        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        .map(renderEventDiscussionMessage)
+        .join('');
+}
+
+function renderEventDiscussionMessage(message) {
+    const authorName = state.memberById.get(message.authorId)?.name || (state.language === 'fr' ? 'Membre MSC' : 'MSC member');
+    return `
+        <div class="event-discussion-message">
+            <div class="event-discussion-avatar">${computeInitials(authorName)}</div>
+            <div class="event-discussion-body">
+                <div class="event-discussion-meta">
+                    <span class="event-discussion-author">${authorName}</span>
+                    <span class="event-discussion-time">${formatRelative(message.createdAt)}</span>
+                </div>
+                <p>${message.content}</p>
+            </div>
+        </div>
+    `;
+}
+
+function updateEventDiscussionFeed(eventId) {
+    const feed = document.getElementById(`eventDiscussionFeed-${eventId}`);
+    if (feed) {
+        feed.innerHTML = renderEventDiscussionMessages(eventId);
+        feed.scrollTop = feed.scrollHeight;
+    }
+    const counter = document.querySelector(`[data-event-discussion-count="${eventId}"]`);
+    if (counter) {
+        const messages = state.eventDiscussions.get(eventId) || [];
+        counter.textContent = formatEventDiscussionCount(messages.length);
+    }
+}
+
+function formatEventDiscussionCount(count) {
+    if (count === 0) {
+        return state.language === 'fr' ? 'Aucun message' : 'No messages';
+    }
+    if (state.language === 'fr') {
+        return `${count} message${count > 1 ? 's' : ''}`;
+    }
+    return `${count} message${count > 1 ? 's' : ''}`;
 }
 
 function renderMemberCard(member) {
@@ -2023,28 +2082,12 @@ function renderBandCard(band) {
     `;
 }
 
-function renderForumRow(topic) {
-    const author = state.memberById.get(topic.authorId)?.name || 'MSC';
-    const badgeClass = topic.category === 'annonces' ? 'badge-msc' : 'badge-new';
-    return `
-        <tr>
-            <td>
-                <div class="forum-topic-title">${topic.title}</div>
-                <div class="forum-topic-meta">${translate(`forumCategories.${topic.category}`)} • ${author}</div>
-            </td>
-            <td><span class="event-badge ${badgeClass}">${translate(`forumCategories.${topic.category}`)}</span></td>
-            <td>${topic.replies}</td>
-            <td>${formatRelative(topic.lastActivity)}</td>
-        </tr>
-    `;
-}
-
 function renderNotificationItem(notification) {
     const icon = {
         event: '📅',
         message: '💬',
         community: '👥',
-        forum: '💭'
+        discussion: '🗨️'
     }[notification.type] || '🔔';
     return `
         <article class="notification-item ${notification.read ? 'read' : ''}" data-notification-id="${notification.id}">
@@ -2088,6 +2131,24 @@ function getRecentMessages(limit) {
     }));
 }
 
+function getRecentEventDiscussionMessages(limit) {
+    const entries = [];
+    state.eventDiscussions.forEach((messages, eventId) => {
+        const event = state.events.find((item) => item.id === eventId);
+        const eventTitle = event ? event.title : 'MSC Event';
+        messages.forEach((message) => {
+            entries.push({
+                eventId,
+                eventTitle,
+                author: state.memberById.get(message.authorId)?.name || 'Membre MSC',
+                content: message.content,
+                createdAt: message.createdAt
+            });
+        });
+    });
+    return entries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, limit);
+}
+
 function computeDashboardStats() {
     const monthStart = new Date();
     monthStart.setDate(1);
@@ -2102,6 +2163,7 @@ function computeDashboardStats() {
 }
 
 function computeAdminStats() {
+    const totalDiscussionMessages = Array.from(state.eventDiscussions.values()).reduce((total, messages) => total + messages.length, 0);
     return [
         {
             label: state.language === 'fr' ? 'Membres totaux' : 'Total members',
@@ -2116,8 +2178,8 @@ function computeAdminStats() {
             value: state.suggestedEvents.filter((suggestion) => suggestion.status === 'pending').length
         },
         {
-            label: state.language === 'fr' ? 'Messages forum' : 'Forum messages',
-            value: state.forumTopics.reduce((total, topic) => total + topic.replies, 0)
+            label: state.language === 'fr' ? 'Messages discussions' : 'Discussion messages',
+            value: totalDiscussionMessages
         },
         {
             label: state.language === 'fr' ? 'Groupes référencés' : 'Bands referenced',

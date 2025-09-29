@@ -19,12 +19,12 @@
             <form id="loginForm" novalidate>
                 <div class="form-group">
                     <label class="form-label">Email ou Nom d'utilisateur</label>
-                    <input type="text" class="form-input" id="loginEmail" placeholder="jean.metal@msc.fr" required>
+                    <input type="text" class="form-input" id="loginEmail" placeholder="jean.metal@msc.fr">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Mot de passe</label>
-                    <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="••••••••">
                 </div>
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">
@@ -62,7 +62,6 @@
                     <button type="button" class="nav-item" data-page="messages">💬 Messages</button>
                     <button type="button" class="nav-item" data-page="members">👥 Membres</button>
                     <button type="button" class="nav-item" data-page="bands">🎵 Groupes</button>
-                    <button type="button" class="nav-item" data-page="forum">💭 Forum</button>
                 </nav>
                 
                 <div class="user-menu">
@@ -99,8 +98,8 @@
                     </div>
 
                     <div class="card">
-                        <h3 style="color: var(--primary-red); margin-bottom: 20px;">🔥 Activité du forum</h3>
-                        <div class="card-stack" id="dashboardForum"></div>
+                        <h3 id="dashboardEventDiscussionTitle" style="color: var(--primary-red); margin-bottom: 20px;">💬 Discussions événements</h3>
+                        <div class="card-stack" id="dashboardEventDiscussions"></div>
                     </div>
                 </div>
             </div>
@@ -221,34 +220,6 @@
                 </div>
             </div>
 
-            <!-- Forum Page -->
-            <div class="page-section" id="forumPage">
-                <div class="page-header">
-                    <h2 class="page-title">💭 Forum</h2>
-                    <p class="page-subtitle">Discussions de la communauté</p>
-                </div>
-
-                <button class="btn btn-primary" style="margin-bottom: 30px;" data-action="open-new-topic">
-                    + Nouveau sujet
-                </button>
-
-                <div class="card">
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Sujet</th>
-                                    <th>Catégorie</th>
-                                    <th>Réponses</th>
-                                    <th>Dernier message</th>
-                                </tr>
-                            </thead>
-                            <tbody id="forumTopicsBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             <!-- Notifications Page -->
             <div class="page-section" id="notificationsPage">
                 <div class="page-header">
@@ -324,7 +295,7 @@
                     </div>
                     
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
-                        <span>Mentions sur le forum</span>
+                        <span>Mentions dans les discussions</span>
                         <button type="button" class="toggle-switch" data-pref="mentions"></button>
                     </div>
                     
@@ -351,7 +322,7 @@
                         <a class="admin-menu-item active">📊 Tableau de bord</a>
                         <a class="admin-menu-item">👥 Gestion membres</a>
                         <a class="admin-menu-item">📅 Gestion événements</a>
-                        <a class="admin-menu-item">💬 Modération forum</a>
+                        <a class="admin-menu-item">💬 Modération discussions</a>
                         <a class="admin-menu-item">📈 Statistiques</a>
                         <a class="admin-menu-item">⚙️ Paramètres</a>
                     </div>
@@ -481,33 +452,6 @@
                     <textarea class="form-textarea" id="messageContent" name="content" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal" id="newTopicModal">
-        <div class="modal-content">
-            <button type="button" class="modal-close" data-close="newTopicModal">×</button>
-            <h2 style="color: var(--primary-red); margin-bottom: 20px;">Nouveau sujet de forum</h2>
-            <form id="newTopicForm">
-                <div class="form-group">
-                    <label class="form-label">Titre du sujet</label>
-                    <input type="text" class="form-input" id="topicTitle" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Catégorie</label>
-                    <select class="form-select" id="topicCategory" name="category" required>
-                        <option value="discussion">Discussion</option>
-                        <option value="annonces">Annonces</option>
-                        <option value="evenements">Événements</option>
-                        <option value="technique">Technique</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-textarea" id="topicContent" name="content" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Publier</button>
             </form>
         </div>
     </div>
