@@ -799,6 +799,11 @@ function renderDashboard() {
     if (!state.currentUserId) return;
     const stats = computeDashboardStats();
 
+    const dashboardTitleEl = document.querySelector('#dashboardPage .page-title');
+    if (dashboardTitleEl) {
+        dashboardTitleEl.textContent = translate('headings.dashboardTitle');
+    }
+
     dom.dashboardStats.innerHTML = [
         {
             label: state.language === 'fr' ? 'Événements ce mois' : 'Events this month',

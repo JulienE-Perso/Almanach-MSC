@@ -521,14 +521,14 @@ const seedData = {
 const translations = {
     fr: {
         nav: {
-            dashboard: '🏠 Accueil',
-            events: '📅 Événements',
-            messages: '💬 Messages',
-            members: '👥 Membres',
-            bands: '🎵 Groupes'
+            dashboard: 'Accueil',
+            events: 'Événements',
+            messages: 'Messages',
+            members: 'Membres',
+            bands: 'Groupes'
         },
         headings: {
-            dashboardTitle: '🏠 Tableau de bord',
+            dashboardTitle: '🏠',
             dashboardSubtitle: (name) => `Bienvenue ${name} ! Voici les dernières nouvelles du MSC`,
             eventsTitle: '📅 Événements',
             eventsSubtitle: 'Tous les événements Metal à venir',
@@ -603,14 +603,14 @@ const translations = {
     },
     en: {
         nav: {
-            dashboard: '🏠 Home',
-            events: '📅 Events',
-            messages: '💬 Messages',
-            members: '👥 Members',
-            bands: '🎵 Artists'
+            dashboard: 'Home',
+            events: 'Events',
+            messages: 'Messages',
+            members: 'Members',
+            bands: 'Artists'
         },
         headings: {
-            dashboardTitle: '🏠 Dashboard',
+            dashboardTitle: '🏠',
             dashboardSubtitle: (name) => `Welcome ${name}! Here is the latest MSC activity`,
             eventsTitle: '📅 Events',
             eventsSubtitle: 'All upcoming metal events',
